@@ -5,23 +5,27 @@ import ecs.components.*;
 import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
+import ecs.components.collision.HeroCollisionEnter;
+import ecs.components.collision.HeroCollisionOut;
 import ecs.components.skill.*;
 import graphic.Animation;
 
 /**
- * The Hero is the player character. It's entity in the ECS. This class helps to setup the hero with
+ * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero with
  * all its components and attributes .
  */
-public class Hero extends Entity {
+public class Hero extends Entity{
 
     private final int fireballCoolDown = 5;
     private final float xSpeed = 0.3f;
     private final float ySpeed = 0.3f;
-
     private final String pathToIdleLeft = "knight/idleLeft";
     private final String pathToIdleRight = "knight/idleRight";
     private final String pathToRunLeft = "knight/runLeft";
     private final String pathToRunRight = "knight/runRight";
+    private final String pathToGetHit = "knight/hit";
+    private final String pathToDie = "knight/death";
+    private final int health = 50;
     private Skill firstSkill;
 
     /** Entity with Components */
@@ -31,6 +35,7 @@ public class Hero extends Entity {
         setupVelocityComponent();
         setupAnimationComponent();
         setupHitboxComponent();
+        setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
@@ -57,7 +62,19 @@ public class Hero extends Entity {
     private void setupHitboxComponent() {
         new HitboxComponent(
                 this,
-                (you, other, direction) -> System.out.println("heroCollisionEnter"),
-                (you, other, direction) -> System.out.println("heroCollisionLeave"));
+                new HeroCollisionEnter(),
+                new HeroCollisionOut());
+    }
+
+    public void setupHealthComponent() {
+        Animation getHitAnimation = AnimationBuilder.buildAnimation(pathToGetHit);
+        Animation dieAnimation = AnimationBuilder.buildAnimation(pathToDie);
+        new HealthComponent(
+                this,
+                health,
+                new HeroOnDeath(),
+                getHitAnimation,
+                dieAnimation
+        );
     }
 }

@@ -14,8 +14,7 @@ import controller.AbstractController;
 import controller.SystemController;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
-import ecs.entities.Entity;
-import ecs.entities.Hero;
+import ecs.entities.*;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -73,6 +72,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     private static PauseMenu<Actor> pauseMenu;
     private static Entity hero;
     private Logger gameLogger;
+    /** Saves the amount of levels the hero has traversed */
+    private static int levelReached = 0;
 
     public static void main(String[] args) {
         // start the game
@@ -134,6 +135,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
+        SpawnMonsters spawnMonsters = new SpawnMonsters(levelReached);
+        Trap t = new Trap();
     }
 
     private void manageEntitiesSets() {
@@ -165,8 +168,17 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         } else camera.setFocusPoint(new Point(0, 0));
     }
 
+    /**
+     * Increases the number of the Levels traversed to determine enemy spawn rate.
+     *
+     * @param hero
+     */
     private void loadNextLevelIfEntityIsOnEndTile(Entity hero) {
-        if (isOnEndTile(hero)) levelAPI.loadLevel(LEVELSIZE);
+        if (isOnEndTile(hero)) {
+            levelReached++;
+            levelAPI.loadLevel(LEVELSIZE);
+            System.out.println("Current Level: " + levelReached);
+        }
     }
 
     private boolean isOnEndTile(Entity entity) {
@@ -179,7 +191,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         return currentTile.equals(currentLevel.getEndTile());
     }
 
-    private void placeOnLevelStart(Entity hero) {
+    public void placeOnLevelStart(Entity hero) {
         entities.add(hero);
         PositionComponent pc =
                 (PositionComponent)
@@ -285,4 +297,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         new SkillSystem();
         new ProjectileSystem();
     }
+
+    public static void resetLevelReached() {
+        levelReached = 0;
+    }
+    public static int getLevelReached() {return levelReached;}
 }
