@@ -15,14 +15,16 @@ import ecs.components.ai.transition.RangeTransition;
 /** A monster resembling a bat which is exceptionally fast and tries to hunt down the hero */
 public class BatMonster extends Monster{
 
+    private final float XSPEED = 0.2f;
+    private final float YSPEED = 0.3f;
     private IFightAI iFightAI = new CollideAI(0.2f);
     private IIdleAI idleAI = new PatrouilleWalk(5f,10,20, PatrouilleWalk.MODE.RANDOM);
     private ITransition transition = new RangeTransition(4f);
 
     public BatMonster(){
         super();
-        super.setxSpeed(0.2f);
-        super.setySpeed(0.3f);
+        super.setxSpeed(XSPEED);
+        super.setySpeed(YSPEED);
         super.setPathToIdleLeft("character/monster/bat/idleAndRunLeft");
         super.setPathToIdleRight("character/monster/bat/idleAndRunRight");
         super.setPathToRunLeft("character/monster/bat/idleAndRunLeft");
