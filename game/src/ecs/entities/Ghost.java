@@ -18,8 +18,8 @@ import ecs.components.ai.transition.RangeTransition;
  * reach of his gravestone, he will leave the level behind.
  */
 public class Ghost extends Monster{
-    private final float XSPEED = 0.05f;
-    private final float YSPEED = 0.1f;
+    private final float XSPEED = 0.2f;
+    private final float YSPEED = 0.2f;
     private IFightAI iFightAI = new CollideAI(10f);
     private IIdleAI idleAI = new RadiusWalk(15, 10);
     private ITransition transition = new RangeTransition(2f);
@@ -27,10 +27,10 @@ public class Ghost extends Monster{
         super();
         super.setxSpeed(XSPEED);
         super.setySpeed(YSPEED);
-        super.setPathToIdleLeft("character/monster/worm/idleLeft");
-        super.setPathToIdleRight("character/monster/worm/idleRight");
-        super.setPathToRunLeft("character/monster/worm/runLeft");
-        super.setPathToRunRight("character/monster/worm/runRight");
+        super.setPathToIdleLeft("character/monster/ghost/idleAndRunLeft");
+        super.setPathToIdleRight("character/monster/ghost/idleAndRunRight");
+        super.setPathToRunLeft("character/monster/ghost/idleAndRunLeft");
+        super.setPathToRunRight("character/monster/ghost/idleAndRunRight");
         super.setIdleLeft();
         super.setIdleRight();
         super.setDmg(0);
