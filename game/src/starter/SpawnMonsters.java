@@ -1,9 +1,6 @@
 package starter;
 
-import ecs.entities.BatMonster;
-import  ecs.entities.Monster;
-import ecs.entities.PigMonster;
-import ecs.entities.WormMonster;
+import ecs.entities.*;
 import level.IOnLevelLoader;
 
 /**
@@ -50,6 +47,11 @@ public class SpawnMonsters implements IOnLevelLoader {
         }
         for(int i = 0; i < amountOfMonsters%3; i++) {
             Monster m = new BatMonster();
+        }
+        // In about 20% of new levels a ghost and his gravestone spawn
+        if((int)Math.floor(Math.random()*(5-1)+0) == 2) {
+            Monster g = new Ghost();
+            Monster gs = new Gravestone();
         }
     }
 }

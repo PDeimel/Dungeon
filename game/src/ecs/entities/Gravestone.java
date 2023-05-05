@@ -12,10 +12,10 @@ public class Gravestone extends Monster{
 
     public Gravestone() {
         super();
-        super.setPathToIdleLeft("character/monster/worm/idleLeft");
-        super.setPathToIdleRight("character/monster/worm/idleRight");
-        super.setPathToRunLeft("character/monster/worm/runLeft");
-        super.setPathToRunRight("character/monster/worm/runRight");
+        super.setPathToIdleLeft("character/monster/gravestone");
+        super.setPathToIdleRight("character/monster/gravestone");
+        super.setPathToRunLeft("character/monster/gravestone");
+        super.setPathToRunRight("character/monster/gravestone");
         super.setIdleLeft();
         super.setIdleRight();
         super.setDmg(0);
