@@ -12,10 +12,10 @@ public abstract class Monster extends Entity {
 
     private float xSpeed;
     private float ySpeed;
-    private  String pathToIdleLeft ;
-    private  String pathToIdleRight  ;
-    private  String pathToRunLeft ;
-    private  String pathToRunRight ;
+    private  String pathToIdleLeft;
+    private  String pathToIdleRight;
+    private  String pathToRunLeft;
+    private  String pathToRunRight;
     private Animation idleLeft;
     private Animation idleRight;
     private MonsterCollisionEnter monsterCollisionEnter= new MonsterCollisionEnter();

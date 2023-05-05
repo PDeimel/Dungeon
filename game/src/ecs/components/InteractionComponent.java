@@ -10,7 +10,7 @@ public class InteractionComponent extends Component {
     private IInteraction onInteraction;
 
     /**
-     * complex ctor which allows the attribuhtes to be configured
+     * complex actor which allows the attributes to be configured
      *
      * @param entity the entity to link to
      * @param radius the radius in which an interaction can happen
@@ -26,7 +26,7 @@ public class InteractionComponent extends Component {
     }
 
     /**
-     * simple ctor which sets all attributes to the default values
+     * simple actor which sets all attributes to the default values
      *
      * @param entity the entity to link to
      */
