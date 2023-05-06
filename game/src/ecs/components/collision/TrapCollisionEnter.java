@@ -30,9 +30,9 @@ public class TrapCollisionEnter implements ICollide {
         }
         HealthComponent heroHealth = (HealthComponent) hero.getComponent(HealthComponent.class).orElse(null);
         if (heroHealth != null) {
-            int fallenDamageAmount = 10;
+            int trapDamageAmount = 10;
             DamageType damageType = DamageType.PHYSICAL;
-            Damage damage = new Damage(fallenDamageAmount, damageType, trap);
+            Damage damage = new Damage(trapDamageAmount, damageType, trap);
             heroHealth.receiveHit(damage);
         }
         AnimationComponent trapAnimation = (AnimationComponent) trap.getComponent(AnimationComponent.class).orElse(null);
