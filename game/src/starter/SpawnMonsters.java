@@ -11,7 +11,7 @@ public class SpawnMonsters implements IOnLevelLoader {
     private final int EASY = 10;
     private final int MEDIUM = 20;
     private final int HARD = 40;
-    private int levelReached;
+    private final int levelReached;
     private int amountOfMonsters;
     public SpawnMonsters(int levelReached) {
         this.levelReached = levelReached;
@@ -23,15 +23,15 @@ public class SpawnMonsters implements IOnLevelLoader {
      */
     private void spawnAmount() {
         if(levelReached <= EASY) {
-            amountOfMonsters = (int)Math.floor(Math.random()*(5-3)+2);
+            amountOfMonsters = (int)Math.ceil(Math.random()*(5-3)+2);
             onLevelLoad();
         }
         else if(levelReached <= MEDIUM) {
-            amountOfMonsters = (int)Math.floor(Math.random()*(10-6)+5);
+            amountOfMonsters = (int)Math.ceil(Math.random()*(10-6)+5);
             onLevelLoad();
         }
         else if(levelReached <= HARD) {
-            amountOfMonsters = (int)Math.floor(Math.random()*(15-11)+10);
+            amountOfMonsters = (int)Math.ceil(Math.random()*(15-11)+10);
             onLevelLoad();
         }
     }
@@ -39,13 +39,13 @@ public class SpawnMonsters implements IOnLevelLoader {
 
     @Override
     public void onLevelLoad() {
-        for(int i = 0; i < amountOfMonsters%3; i++) {
+        for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new WormMonster();
         }
-        for(int i = 0; i < amountOfMonsters%3; i++) {
+        for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new PigMonster();
         }
-        for(int i = 0; i < amountOfMonsters%3; i++) {
+        for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new BatMonster();
         }
         // In about 20% of new levels a ghost and his gravestone spawn

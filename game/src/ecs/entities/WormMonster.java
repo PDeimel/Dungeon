@@ -30,7 +30,7 @@ public class WormMonster extends Monster{
         super.setPathToRunRight("character/monster/worm/runRight");
         super.setIdleLeft();
         super.setIdleRight();
-        super.setDmg(1);
+        super.setDmg(2);
         new PositionComponent(this);
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
         new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());

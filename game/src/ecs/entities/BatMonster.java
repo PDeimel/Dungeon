@@ -31,7 +31,7 @@ public class BatMonster extends Monster{
         super.setPathToRunRight("character/monster/bat/idleAndRunRight");
         super.setIdleLeft();
         super.setIdleRight();
-        super.setDmg(10);
+        super.setDmg(7);
         new PositionComponent(this);
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
         new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());

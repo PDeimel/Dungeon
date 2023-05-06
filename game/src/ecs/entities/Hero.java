@@ -25,7 +25,7 @@ public class Hero extends Entity{
     private final String pathToRunRight = "knight/runRight";
     private final String pathToGetHit = "knight/hit";
     private final String pathToDie = "knight/death";
-    private final int health = 50;
+    private final int health = 100;
     private Skill firstSkill;
 
     /** Entity with Components */

@@ -34,7 +34,7 @@ public class PigMonster extends Monster {
         super.setPathToRunRight("character/monster/pig/runRight");
         super.setIdleLeft();
         super.setIdleRight();
-        super.setDmg(5);
+        super.setDmg(8);
         new PositionComponent(this);
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
         new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());
