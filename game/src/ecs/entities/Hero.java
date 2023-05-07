@@ -27,6 +27,7 @@ public class Hero extends Entity{
     private final String pathToDie = "knight/death";
     private final int health = 50;
     private Skill firstSkill;
+    private Skill secondSkill;
 
     /** Entity with Components */
     public Hero() {
@@ -39,6 +40,7 @@ public class Hero extends Entity{
         PlayableComponent pc = new PlayableComponent(this);
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
+        pc.setSkillSlot2(secondSkill);
     }
 
     private void setupVelocityComponent() {
@@ -57,7 +59,11 @@ public class Hero extends Entity{
         firstSkill =
                 new Skill(
                         new FireballSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+
+        secondSkill= new Skill(
+            new IceBallSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
     }
+
 
     private void setupHitboxComponent() {
         new HitboxComponent(

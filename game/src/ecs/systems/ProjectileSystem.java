@@ -9,6 +9,8 @@ import tools.Point;
 public class ProjectileSystem extends ECS_System {
 
     // private record to hold all data during streaming
+
+    private final float curveFactor = 1.0f;
     private record PSData(
             Entity e, ProjectileComponent prc, PositionComponent pc, VelocityComponent vc) {}
 
@@ -20,6 +22,7 @@ public class ProjectileSystem extends ECS_System {
                 .flatMap(e -> e.getComponent(ProjectileComponent.class).stream())
                 .map(prc -> buildDataObject((ProjectileComponent) prc))
                 .map(this::setVelocity)
+                .map(this::updateProjectilePosition)
                 // Filter all entities that have reached their endpoint
                 .filter(
                         psd ->
@@ -44,6 +47,21 @@ public class ProjectileSystem extends ECS_System {
                                 .orElseThrow(ProjectileSystem::missingAC);
 
         return new PSData(e, prc, pc, vc);
+
+    }
+
+        /**
+         Method that is rensponsible for the changes of velocity in real time
+         */
+    private PSData updateProjectilePosition(PSData data) {
+        float initialX = data.prc.getStartPosition().x;
+        float distance = Math.abs(data.pc.getPosition().x - initialX);
+        float maxDistance = Math.abs(data.prc.getGoalLocation().x - initialX);
+
+        float newY = (float) (curveFactor * Math.pow(distance, 2) / Math.pow(maxDistance, 2));
+        data.pc.getPosition().y += newY;
+
+        return data;
     }
 
     private PSData setVelocity(PSData data) {
