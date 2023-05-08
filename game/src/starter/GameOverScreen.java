@@ -55,9 +55,8 @@ public class GameOverScreen extends JFrame {
                 Hero hero = new Hero();
                 Game.resetLevelReached();
                 Set<Entity> allEntities = Game.getEntities();
-                Iterator<Entity> entityIterator = allEntities.iterator();
-                while (entityIterator.hasNext()) {
-                    Game.removeEntity(entityIterator.next());
+                for (Entity allEntity : allEntities) {
+                    Game.removeEntity(allEntity);
                 }
                 Game.togglePause();
                 Game.setHero(hero);

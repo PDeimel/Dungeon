@@ -50,8 +50,11 @@ public class SpawnMonsters implements IOnLevelLoader {
         }
         // In about 20% of new levels a ghost and his gravestone spawn
         if((int)Math.floor(Math.random()*(5-1)+0) == 2) {
-            Monster g = new Ghost();
-            Monster gs = new Gravestone();
+            Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().get()));
         }
+    }
+
+    public void setAmountOfMonsters(int amountOfMonsters) {
+        this.amountOfMonsters = amountOfMonsters;
     }
 }
