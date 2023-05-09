@@ -22,14 +22,26 @@ public class Gravestone extends Monster{
         super.setIdleLeft();
         super.setIdleRight();
         super.setDmg(0);
-        new PositionComponent(this);
+        setUpAnimationComponent();
+        setUpPositionComponent();
+        setUpHitboxComponent();
+        this.ghost = ghost;
+    }
+
+    public void setUpAnimationComponent() {
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
+    }
+
+    public void setUpPositionComponent() {
+        new PositionComponent(this);
+    }
+
+    public void setUpHitboxComponent() {
         new HitboxComponent(
             this,
             (you, other, direction) -> giveReward(other),
             (you, other, direction) -> System.out.println()
         );
-        this.ghost = ghost;
     }
 
     /**
