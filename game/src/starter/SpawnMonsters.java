@@ -13,6 +13,7 @@ public class SpawnMonsters implements IOnLevelLoader {
     private final int HARD = 40;
     private final int levelReached;
     private int amountOfMonsters;
+    private boolean graveSpawned = false;
     public SpawnMonsters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
@@ -48,9 +49,15 @@ public class SpawnMonsters implements IOnLevelLoader {
         for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new BatMonster();
         }
-        // In about 20% of new levels a ghost and his gravestone spawn
-        if((int)Math.floor(Math.random()*(5-1)+0) == 2) {
-            Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().get()));
+        if(!graveSpawned) {
+            // In about 20% of new levels a ghost and his gravestone spawn
+            if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+                Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().get()));
+                /*  When there already is a gravestone in the level, the punishment of the
+                    ghost in form of spawning monsters shall not create another stone with
+                    another ghost. */
+                graveSpawned = true;
+            }
         }
     }
 
