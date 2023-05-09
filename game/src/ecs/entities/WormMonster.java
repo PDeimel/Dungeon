@@ -18,7 +18,7 @@ public class WormMonster extends Monster{
     private final float XSPEED = 0.05f;
     private final float YSPEED = 0.1f;
     private IFightAI iFightAI = new CollideAI(0.05f);
-    IIdleAI idleAI = new RadiusWalk(15, 10);
+    private IIdleAI idleAI = new RadiusWalk(15, 10);
     private ITransition transition = new RangeTransition(2f);
     public WormMonster() {
         super();
@@ -30,7 +30,7 @@ public class WormMonster extends Monster{
         super.setPathToRunRight("character/monster/worm/runRight");
         super.setIdleLeft();
         super.setIdleRight();
-        super.setDmg(1);
+        super.setDmg(2);
         new PositionComponent(this);
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
         new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());
@@ -46,6 +46,5 @@ public class WormMonster extends Monster{
         new HealthComponent(this, 100, (Entity e) -> {
             HealthComponent hc= (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
         }, missingTextureAnimation, missingTextureAnimation);
-
     }
 }

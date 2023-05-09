@@ -21,7 +21,7 @@ public class PigMonster extends Monster {
     private final float XSPEED = 0.15f;
     private final float YSPEED = 0f;
     private IFightAI iFightAI = new CollideAI(0.4f);
-    IIdleAI idleAI = new StaticRadiusLongWay(10f,5);
+    private IIdleAI idleAI = new StaticRadiusLongWay(10f,5);
     private ITransition transition = new RangeTransition(3f);
 
     public PigMonster(){
@@ -34,7 +34,7 @@ public class PigMonster extends Monster {
         super.setPathToRunRight("character/monster/pig/runRight");
         super.setIdleLeft();
         super.setIdleRight();
-        super.setDmg(5);
+        super.setDmg(8);
         new PositionComponent(this);
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
         new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());
