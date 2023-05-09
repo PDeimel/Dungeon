@@ -52,7 +52,7 @@ public class SpawnMonsters implements IOnLevelLoader {
         if(!graveSpawned) {
             // In about 20% of new levels a ghost and his gravestone spawn
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
-                Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().get()));
+                Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().orElseThrow()));
                 /*  When there already is a gravestone in the level, the punishment of the
                     ghost in form of spawning monsters shall not create another stone with
                     another ghost. */
