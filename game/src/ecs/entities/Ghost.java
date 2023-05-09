@@ -33,7 +33,7 @@ public class Ghost extends Monster{
         super.setIdleLeft();
         super.setIdleRight();
         super.setDmg(0);
-        new PositionComponent(this);
+        setUpPositionComponent();
         setUpAnimationComponent();
         setUpVelocityComponent();
         setUpHitboxComponent();
@@ -48,7 +48,7 @@ public class Ghost extends Monster{
         if(activeThisLevel) {
             if(Math.round(Math.random()) == 0) {
                 Optional<Component> heroHealthThis = this.hero.getComponent(HealthComponent.class);
-                HealthComponent heroHealth = (HealthComponent) heroHealthThis.get();
+                HealthComponent heroHealth = (HealthComponent) heroHealthThis.orElseThrow();
                 heroHealth.setCurrentHealthpoints(heroHealth.getCurrentHealthpoints() + 20);
                 System.out.println("The hero just received 20 health for helping the ghost reach the afterlife!");
             }
@@ -101,6 +101,13 @@ public class Ghost extends Monster{
             (player, ghost, direction) -> System.out.println("Leaves ghost collision"));
     }
 
+    private void setUpPositionComponent() {
+        new PositionComponent(this);
+    }
+
+    /**
+     * Gives the ghost a special AI in which it well never try to follow or attack the hero.
+     */
     private void setUpPassiveAITransition() {
         new AIComponent(this, new CollideAI(3f), new StaticRadiusWalk(15f, 2), new PassiveTransition());
     }
