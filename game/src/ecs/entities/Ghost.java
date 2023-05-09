@@ -48,7 +48,7 @@ public class Ghost extends Monster{
         if(activeThisLevel) {
             if(Math.round(Math.random()) == 0) {
                 Optional<Component> heroHealthThis = this.hero.getComponent(HealthComponent.class);
-                HealthComponent heroHealth = (HealthComponent) heroHealthThis.get();
+                HealthComponent heroHealth = (HealthComponent) heroHealthThis.orElseThrow();
                 heroHealth.setCurrentHealthpoints(heroHealth.getCurrentHealthpoints() + 20);
                 System.out.println("The hero just received 20 health for helping the ghost reach the afterlife!");
             }
