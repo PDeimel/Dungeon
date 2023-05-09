@@ -6,13 +6,18 @@ import tools.Point;
 
 public class ProjectileComponent extends Component {
 
+    private boolean isCurved; //// used to determinate ,if the projectile will fly curved.
+
+
     private Point goalLocation;
     private Point startPosition;
 
-    public ProjectileComponent(Entity entity, Point startPosition, Point goalLocation) {
+    public ProjectileComponent(Entity entity, Point startPosition, Point goalLocation,boolean isCurved) {
         super(entity);
         this.goalLocation = goalLocation;
         this.startPosition = startPosition;
+        this.isCurved=isCurved;
+
     }
 
     /**
@@ -32,4 +37,10 @@ public class ProjectileComponent extends Component {
     public Point getStartPosition() {
         return startPosition;
     }
+
+    public boolean isCurving() {
+        return isCurved;
+    }
+
+
 }
