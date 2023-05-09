@@ -105,6 +105,9 @@ public class Ghost extends Monster{
         new PositionComponent(this);
     }
 
+    /**
+     * Gives the ghost a special AI in which it well never try to follow or attack the hero.
+     */
     private void setUpPassiveAITransition() {
         new AIComponent(this, new CollideAI(3f), new StaticRadiusWalk(15f, 2), new PassiveTransition());
     }
