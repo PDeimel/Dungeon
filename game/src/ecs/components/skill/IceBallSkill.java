@@ -6,11 +6,16 @@ import tools.Point;
 
 public class IceBallSkill extends CurvedDamageProjectileSkill{
 
+    /**
+     * Class represents the Iceball in the game
+     * @param targetSelection
+     */
+
     public IceBallSkill(ITargetSelection targetSelection) {
         super(
-            "skills/fireball/fireBall_Down/",
+            "skills/fireball/IceBall/snowflacke.png",
             0.5f,
-            new Damage(1, DamageType.FIRE, null),
+            new Damage(1, DamageType.ICE, null),
             new Point(10, 10),
             targetSelection,
             5f);

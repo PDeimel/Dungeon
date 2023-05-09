@@ -136,6 +136,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
         SpawnMonsters spawnMonsters = new SpawnMonsters(levelReached);
+
         Trap t = new Trap();
     }
 
@@ -302,4 +303,5 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         levelReached = 0;
     }
     public static int getLevelReached() {return levelReached;}
+
 }

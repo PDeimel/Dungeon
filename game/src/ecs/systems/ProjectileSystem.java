@@ -10,7 +10,8 @@ public class ProjectileSystem extends ECS_System {
 
     // private record to hold all data during streaming
 
-    private final float curveFactor = 1.0f;
+
+
     private record PSData(
             Entity e, ProjectileComponent prc, PositionComponent pc, VelocityComponent vc) {}
 
@@ -18,19 +19,19 @@ public class ProjectileSystem extends ECS_System {
     @Override
     public void update() {
         Game.getEntities().stream()
-                // Consider only entities that have a ProjectileComponent
+
                 .flatMap(e -> e.getComponent(ProjectileComponent.class).stream())
                 .map(prc -> buildDataObject((ProjectileComponent) prc))
                 .map(this::setVelocity)
                 .map(this::updateProjectilePosition)
-                // Filter all entities that have reached their endpoint
+
                 .filter(
                         psd ->
                                 hasReachedEndpoint(
                                         psd.prc.getStartPosition(),
                                         psd.prc.getGoalLocation(),
                                         psd.pc.getPosition()))
-                // Remove all entities who reached their endpoint
+
                 .forEach(this::removeEntitiesOnEndpoint);
     }
 
@@ -51,15 +52,34 @@ public class ProjectileSystem extends ECS_System {
     }
 
         /**
-         Method that is rensponsible for the changes of velocity in real time
+         Method aplly curve to Projectile with changes in y or x Achse, or change the direction with changes  only on Y Achse
+         verify, if the velocity in both Achses y und x to decide where will apply the decay factor
+         Verify, if the traveled distance of projectile bigger or smaller
+         if bigger, we change the values of velocity in Y-Achse to negative and then we have other tipe of Movement
+         after a determinate distance
          */
-    private PSData updateProjectilePosition(PSData data) {
-        float initialX = data.prc.getStartPosition().x;
-        float distance = Math.abs(data.pc.getPosition().x - initialX);
-        float maxDistance = Math.abs(data.prc.getGoalLocation().x - initialX);
 
-        float newY = (float) (curveFactor * Math.pow(distance, 2) / Math.pow(maxDistance, 2));
-        data.pc.getPosition().y += newY;
+    private PSData updateProjectilePosition(PSData data) {
+        if (data.prc.isCurving()) {
+            float decayFactor = 0.5f;
+            float distanceFromStart = Point.calculateDistance(data.pc.getPosition(), data.prc.getStartPosition());
+
+
+            if (Math.abs(data.vc.getXVelocity()) > Math.abs(data.vc.getYVelocity())) {
+
+                data.pc.getPosition().y -= decayFactor * distanceFromStart;
+            } else {
+
+                data.pc.getPosition().x -= decayFactor * distanceFromStart;
+            }
+        } else {
+
+            float distance= 2.5f; // Abstand um die Richtung zu ändern
+            float distanceFromStart = Point.calculateDistance(data.pc.getPosition(), data.prc.getStartPosition());
+            if (distanceFromStart > distance) {
+                data.vc.setCurrentYVelocity(-Math.abs(data.vc.getYVelocity()));
+            }
+        }
 
         return data;
     }
@@ -104,4 +124,6 @@ public class ProjectileSystem extends ECS_System {
     private static MissingComponentException missingAC() {
         return new MissingComponentException("AnimationComponent");
     }
+
+
 }

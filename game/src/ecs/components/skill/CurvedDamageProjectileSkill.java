@@ -3,6 +3,7 @@ package ecs.components.skill;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
+import ecs.components.xp.ProjectileTag;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -18,7 +19,7 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
     private Point projectileHitboxSize;
     private ITargetSelection selectionFunction;
 
-    private final float curveFactor = 1.0f; // factor to creates the new movement
+
 
     public CurvedDamageProjectileSkill(
         String pathToTexturesOfProjectile,
@@ -56,7 +57,12 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
             SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
 
         new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        new ProjectileComponent(projectile, epc.getPosition(), targetPoint);
+        /***
+        Constructor of Projectile Component receives  true parameter , Projectile turns curved(
+         Variable used in
+         ProjectileSystem)
+         */
+        new ProjectileComponent(projectile, epc.getPosition(), targetPoint,true);
 
         ICollide collide =
             (a, b, from) -> {
@@ -73,9 +79,11 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
         new HitboxComponent(
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
 
-        float initialX = epc.getPosition().x;
-        float distance = Math.abs(targetPoint.x - initialX);
-        float maxDistance = Math.abs(aimedOn.x - initialX);
+        /**
+         *Markierung für curved-Projectile
+         */
+        new ProjectileTag(projectile);
+
 
 
 
