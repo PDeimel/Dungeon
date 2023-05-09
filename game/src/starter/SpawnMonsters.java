@@ -8,9 +8,9 @@ import level.IOnLevelLoader;
  */
 public class SpawnMonsters implements IOnLevelLoader {
 
-    private final int EASY = 10;
-    private final int MEDIUM = 20;
-    private final int HARD = 40;
+    int EASY = 10;
+    int MEDIUM = 20;
+    int HARD = 40;
     private final int levelReached;
     private int amountOfMonsters;
     private boolean graveSpawned = false;
@@ -23,6 +23,7 @@ public class SpawnMonsters implements IOnLevelLoader {
      * Spawns a random amount of different monsters depending on the levels already reached.
      */
     private void spawnAmount() {
+
         if(levelReached <= EASY) {
             amountOfMonsters = (int)Math.ceil(Math.random()*(5-3)+2);
             onLevelLoad();
@@ -37,7 +38,10 @@ public class SpawnMonsters implements IOnLevelLoader {
         }
     }
 
-
+    /**
+     * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates a gravestone with
+     * a ghost once per level.
+     */
     @Override
     public void onLevelLoad() {
         for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
@@ -53,6 +57,7 @@ public class SpawnMonsters implements IOnLevelLoader {
             // In about 20% of new levels a ghost and his gravestone spawn
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
                 Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().orElseThrow()));
+
                 /*  When there already is a gravestone in the level, the punishment of the
                     ghost in form of spawning monsters shall not create another stone with
                     another ghost. */
