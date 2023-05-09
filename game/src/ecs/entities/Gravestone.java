@@ -28,15 +28,15 @@ public class Gravestone extends Monster{
         this.ghost = ghost;
     }
 
-    public void setUpAnimationComponent() {
+    private void setUpAnimationComponent() {
         new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
     }
 
-    public void setUpPositionComponent() {
+    private void setUpPositionComponent() {
         new PositionComponent(this);
     }
 
-    public void setUpHitboxComponent() {
+    private void setUpHitboxComponent() {
         new HitboxComponent(
             this,
             (you, other, direction) -> giveReward(other),

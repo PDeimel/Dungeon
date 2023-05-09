@@ -33,7 +33,7 @@ public class Ghost extends Monster{
         super.setIdleLeft();
         super.setIdleRight();
         super.setDmg(0);
-        new PositionComponent(this);
+        setUpPositionComponent();
         setUpAnimationComponent();
         setUpVelocityComponent();
         setUpHitboxComponent();
@@ -99,6 +99,10 @@ public class Ghost extends Monster{
             this,
             (player, ghost, direction) -> System.out.println("Collides with ghost"),
             (player, ghost, direction) -> System.out.println("Leaves ghost collision"));
+    }
+
+    private void setUpPositionComponent() {
+        new PositionComponent(this);
     }
 
     private void setUpPassiveAITransition() {
