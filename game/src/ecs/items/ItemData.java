@@ -132,20 +132,40 @@ public abstract class ItemData {
         return itemType;
     }
 
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
     public Animation getInventoryTexture() {
         return inventoryTexture;
+    }
+
+    public void setInventoryTexture(Animation inventoryTexture) {
+        this.inventoryTexture = inventoryTexture;
     }
 
     public Animation getWorldTexture() {
         return worldTexture;
     }
 
+    public void setWorldTexture(Animation worldTexture) {
+        this.worldTexture = worldTexture;
+    }
+
     public String getItemName() {
         return itemName;
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
