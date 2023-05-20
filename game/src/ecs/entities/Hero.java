@@ -41,6 +41,7 @@ public class Hero extends Entity{
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
         pc.setSkillSlot2(secondSkill);
+        setUpInventoryComponent();
     }
 
     private void setupVelocityComponent() {
@@ -72,7 +73,7 @@ public class Hero extends Entity{
                 new HeroCollisionOut());
     }
 
-    public void setupHealthComponent() {
+    private void setupHealthComponent() {
         Animation getHitAnimation = AnimationBuilder.buildAnimation(pathToGetHit);
         Animation dieAnimation = AnimationBuilder.buildAnimation(pathToDie);
         new HealthComponent(
@@ -82,5 +83,9 @@ public class Hero extends Entity{
                 getHitAnimation,
                 dieAnimation
         );
+    }
+
+    private void setUpInventoryComponent() {
+        new InventoryComponent(this, 6);
     }
 }
