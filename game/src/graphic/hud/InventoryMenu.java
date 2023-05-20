@@ -20,12 +20,12 @@ public class InventoryMenu<T extends Actor> extends ScreenController<T> {
                 new Point(0, 0),
                 3,
                 new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
-                    .setFontcolor(Color.RED)
+                    .setFontcolor(Color.BLUE)
                     .build());
         screenText.setFontScale(3);
         screenText.setPosition(
             (Constants.WINDOW_WIDTH) / 2f - screenText.getWidth(),
-            (Constants.WINDOW_HEIGHT) / 1.5f + screenText.getHeight(),
+            (screenText.getHeight()),
             Align.center | Align.bottom);
         add((T) screenText);
         hideMenu();
