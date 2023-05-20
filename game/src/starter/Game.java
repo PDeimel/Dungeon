@@ -18,6 +18,7 @@ import ecs.entities.*;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
+import graphic.hud.InventoryMenu;
 import graphic.hud.PauseMenu;
 import java.io.IOException;
 import java.util.*;
@@ -70,6 +71,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
+    private static InventoryMenu<Actor> inventoryMenu;
     private static Entity hero;
     private Logger gameLogger;
     /** Saves the amount of levels the hero has traversed */
@@ -115,7 +117,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         systems = new SystemController();
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
+        inventoryMenu = new InventoryMenu<>();
         controller.add(pauseMenu);
+        controller.add(inventoryMenu);
         hero = new Hero();
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
@@ -128,6 +132,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         manageEntitiesSets();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) togglePause();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) toggleInventory();
     }
 
     @Override
@@ -211,6 +216,17 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (pauseMenu != null) {
             if (paused) pauseMenu.showMenu();
             else pauseMenu.hideMenu();
+        }
+    }
+
+    public static void toggleInventory() {
+        paused = !paused;
+        if (systems != null) {
+            systems.forEach(ECS_System::toggleRun);
+        }
+        if (inventoryMenu != null) {
+            if (paused) inventoryMenu.showMenu();
+            else inventoryMenu.hideMenu();
         }
     }
 
