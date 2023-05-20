@@ -14,7 +14,7 @@ import starter.Game;
 import tools.Point;
 
 /** A Class which contains the Information of a specific Item. */
-public class ItemData {
+public abstract class ItemData {
     private ItemType itemType;
     private Animation inventoryTexture;
     private Animation worldTexture;

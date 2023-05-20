@@ -10,24 +10,7 @@ public class ItemDataGenerator {
 
     private List<ItemData> templates =
             List.of(
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Buch",
-                            "Ein sehr lehrreiches Buch."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Tuch",
-                            "Ein sauberes Tuch.."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Namensschild",
-                            "Ein Namensschild wo der Name nicht mehr lesbar ist.."));
+                    new Cake());
     private Random rand = new Random();
 
     /**
