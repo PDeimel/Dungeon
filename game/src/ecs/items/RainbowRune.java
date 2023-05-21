@@ -5,17 +5,18 @@ import starter.SpawnMonsters;
 
 import java.util.Random;
 
-public class RainbowEffect implements IOnUse {
+public class RainbowRune extends ItemData implements IOnCollect {
     Random rd = new Random();
+
     @Override
-    public void onUse(Entity e, ItemData item) {
+    public void onCollect(Entity WorldItemEntity, Entity whoCollides) {
         int res = rd.nextInt(3);
         if(res == 0) {
-            new HealEffect().onUse(e, item);
+            new Cake().onCollect(WorldItemEntity, WorldItemBuilder.buildWorldItem(this));
             System.out.println("The Rainbow-Rune healed you.");
         }
         else if(res == 1) {
-            new EarthquakeEffect().onUse(e, item);
+            new Earthquake().onCollect(WorldItemEntity, WorldItemBuilder.buildWorldItem(this));
             System.out.println("The Rainbow-Rune created an earthquake.");
         }
         else {
