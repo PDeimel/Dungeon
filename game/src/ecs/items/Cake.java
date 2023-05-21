@@ -1,5 +1,7 @@
 package ecs.items;
 
+import ecs.components.InteractionComponent;
+import ecs.entities.Entity;
 import graphic.Animation;
 
 import java.util.ArrayList;
@@ -16,5 +18,6 @@ public class Cake extends ItemData{
         super.setInventoryTexture(new Animation(inventoryTexture, 5));
         worldTexture.add("objects/items/cake/cake_world.png");
         super.setWorldTexture(new Animation(worldTexture, 5));
+        Entity cakeItem = WorldItemBuilder.buildWorldItem(this);
     }
 }

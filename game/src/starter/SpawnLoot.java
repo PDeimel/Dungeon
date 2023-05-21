@@ -2,6 +2,7 @@ package starter;
 
 import ecs.components.PositionComponent;
 import ecs.entities.Chest;
+import ecs.items.Earthquake;
 import ecs.items.ItemData;
 import ecs.items.RainbowRune;
 import level.IOnLevelLoader;
@@ -13,6 +14,7 @@ public class SpawnLoot implements IOnLevelLoader {
 
     public SpawnLoot() {
         chestItems.add(new RainbowRune());
+        chestItems.add(new Earthquake());
         onLevelLoad();
     }
     @Override

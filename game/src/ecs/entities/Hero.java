@@ -41,7 +41,7 @@ public class Hero extends Entity{
         setupFireballSkill();
         pc.setSkillSlot1(firstSkill);
         pc.setSkillSlot2(secondSkill);
-        setUpInventoryComponent();
+        new InventoryComponent(this, 9);
     }
 
     private void setupVelocityComponent() {
@@ -85,7 +85,4 @@ public class Hero extends Entity{
         );
     }
 
-    private void setUpInventoryComponent() {
-        new InventoryComponent(this, 6);
-    }
 }

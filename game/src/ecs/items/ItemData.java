@@ -14,8 +14,9 @@ import starter.Game;
 import tools.Point;
 
 /** A Class which contains the Information of a specific Item. */
-public abstract class ItemData {
+public class ItemData {
     private ItemType itemType;
+    private Category category;
     private Animation inventoryTexture;
     private Animation worldTexture;
     private String itemName;
@@ -25,6 +26,10 @@ public abstract class ItemData {
     private IOnDrop onDrop;
     // active
     private IOnUse onUse;
+
+    private int inventorySize = 0;
+
+    private int inventorySlot = -1;
 
     // passive
     private DamageModifier damageModifier;
@@ -90,6 +95,33 @@ public abstract class ItemData {
                 new DamageModifier());
     }
 
+    /**
+     * creates a new item data object with an onUse effect
+     *
+     * @param itemType
+     * @param inventoryTexture
+     * @param worldTexture
+     * @param itemName
+     * @param description
+     * @param onUse
+     */
+    public ItemData(
+        ItemType itemType,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        IOnUse onUse) {
+        this.itemType = itemType;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.setOnUse(onUse);
+    }
+
     public ItemData() {
         this(
                 ItemConfig.TYPE.get(),
@@ -98,6 +130,105 @@ public abstract class ItemData {
                 ItemConfig.NAME.get(),
                 ItemConfig.DESCRIPTION.get());
     }
+
+    public ItemData(
+        ItemType itemType,
+        Category category,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        IOnUse onUse) {
+        this.itemType = itemType;
+        this.category = category;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.setOnUse(onUse);
+    }
+
+    public ItemData(
+        ItemType itemType,
+        Category category,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        IOnUse onUse,
+        int invSize) {
+        this.itemType = itemType;
+        this.category = category;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.onUse = onUse;
+        this.inventorySize = invSize;
+    }
+
+    public ItemData(
+        ItemType itemType,
+        Category category,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description) {
+        this.itemType = itemType;
+        this.category = category;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.onUse = ItemData::defaultUseCallback;
+    }
+
+    public ItemData(
+        ItemType itemType,
+        Category category,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        DamageModifier damageModifier) {
+        this.itemType = itemType;
+        this.category = category;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.onUse = ItemData::defaultUseCallback;
+        this.damageModifier = damageModifier;
+    }
+
+    public ItemData(
+        ItemType itemType,
+        Category category,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        int inventorySize) {
+        this.itemType = itemType;
+        this.category = category;
+        this.inventoryTexture = inventoryTexture;
+        this.worldTexture = worldTexture;
+        this.itemName = itemName;
+        this.description = description;
+        this.onCollect = ItemData::defaultCollect;
+        this.onDrop = ItemData::defaultDrop;
+        this.onUse = ItemData::defaultUseCallback;
+        this.inventorySize = inventorySize;
+    }
+
 
     /**
      * what should happen when an Entity interacts with the Item while it is lying in the World.
@@ -132,9 +263,6 @@ public abstract class ItemData {
         return itemType;
     }
 
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
-    }
 
     public Animation getInventoryTexture() {
         return inventoryTexture;
@@ -154,10 +282,6 @@ public abstract class ItemData {
 
     public String getItemName() {
         return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public String getDescription() {
@@ -241,5 +365,17 @@ public abstract class ItemData {
 
     public void setOnUse(IOnUse onUse) {
         this.onUse = onUse;
+    }
+
+    public int getInventorySlot() {
+        return inventorySlot;
+    }
+
+    public int getInventorySize() {
+        return inventorySize;
+    }
+
+    public void setInventorySlot(int inventorySlot) {
+        this.inventorySlot = inventorySlot;
     }
 }

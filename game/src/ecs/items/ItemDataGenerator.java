@@ -10,7 +10,7 @@ public class ItemDataGenerator {
 
     private List<ItemData> templates =
             List.of(
-                    new Cake());
+            );
     private Random rand = new Random();
 
     /**
