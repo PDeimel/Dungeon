@@ -17,7 +17,8 @@ public class SpawnLoot implements IOnLevelLoader {
     }
     @Override
     public void onLevelLoad() {
-        if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+        int ran = rd.nextInt(9);
+        if (ran == 0) {
             Game.addEntity(newItem);
         }
 
