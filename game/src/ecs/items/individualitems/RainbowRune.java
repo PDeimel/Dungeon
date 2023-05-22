@@ -12,6 +12,9 @@ import starter.SpawnMonsters;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * An individual item that grants on of three different effect on use
+ */
 public class RainbowRune extends ItemData implements IOnUse {
     Random rd = new Random();
     public RainbowRune() {
@@ -26,6 +29,13 @@ public class RainbowRune extends ItemData implements IOnUse {
         this.setOnUse(this);
     }
 
+    /**
+     * Creates a random number that determines whether specific item effects happen or if monsters
+     * via SpawnMonsters are spawned.
+     *
+     * @param e The entity that used the item.
+     * @param item The item that was used.
+     */
     @Override
     public void onUse(Entity e, ItemData item) {
         int res = rd.nextInt(3);

@@ -6,6 +6,9 @@ import ecs.entities.Entity;
 import ecs.items.*;
 import starter.Game;
 
+/**
+ * An individual item that, once used, heals the hero for a set amount of health
+ */
 public class Cake extends ItemData implements IOnUse {
 
     public Cake() {
@@ -20,6 +23,13 @@ public class Cake extends ItemData implements IOnUse {
         this.setOnUse(this);
     }
 
+    /**
+     * Gets the HealthComponent of the hero and adds up to 20 HP to it, depending on if the hero needs that many
+     * HP or still is quite full (< 20 missing)
+     *
+     * @param e The entity that used the item.
+     * @param item The item that was used.
+     */
     @Override
     public void onUse(Entity e, ItemData item) {
         e.getComponent(HealthComponent.class)

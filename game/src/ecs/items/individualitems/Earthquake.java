@@ -10,6 +10,9 @@ import starter.Game;
 
 import java.util.Set;
 
+/**
+ * An individual item that deals damage to everything on the floor which has health
+ */
 public class Earthquake extends ItemData implements IOnUse {
     private final int DMG = 10;
 
@@ -25,6 +28,13 @@ public class Earthquake extends ItemData implements IOnUse {
         this.setOnUse(this);
     }
 
+    /**
+     * Gets a list of all entities in the level, checks if it has a HealthComponent,
+     * and if so, deals 10 physical damage to them.
+     *
+     * @param e The entity that used the item.
+     * @param item The item that was used.
+     */
     @Override
     public void onUse(Entity e, ItemData item) {
         Set<Entity> allEntities = Game.getEntities();

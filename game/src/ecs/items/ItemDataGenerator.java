@@ -12,6 +12,7 @@ import java.util.Random;
 public class ItemDataGenerator {
     private static final List<String> missingTexture = List.of("animation/missingTexture.png");
 
+    //Every type of item created is put into the template-list
     private List<ItemData> templates =
             List.of(
                 new Bag(),

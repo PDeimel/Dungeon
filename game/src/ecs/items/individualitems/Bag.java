@@ -7,6 +7,9 @@ import ecs.items.ItemData;
 import ecs.items.ItemType;
 import ecs.items.WorldItemBuilder;
 
+/**
+ * An individual item which is supposed to expand the hero's inventory when collected
+ */
 public class Bag extends ItemData{
 
     public Bag() {
