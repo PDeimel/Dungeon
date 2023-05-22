@@ -1,11 +1,12 @@
-package ecs.items;
+package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.HealthComponent;
 import ecs.entities.Entity;
+import ecs.items.*;
 import starter.Game;
 
-public class Cake extends ItemData implements IOnCollect{
+public class Cake extends ItemData implements IOnUse {
 
     public Cake() {
         super(
@@ -16,13 +17,12 @@ public class Cake extends ItemData implements IOnCollect{
             "A delicious cake that restores your health to up to 20 HP."
         );
         WorldItemBuilder.buildWorldItem(this);
-        this.setOnCollect(this);
+        this.setOnUse(this);
     }
 
     @Override
-    public void onCollect(Entity WorldItemEntity, Entity whoCollides) {
-        Game.removeEntity(WorldItemEntity);
-        whoCollides.getComponent(HealthComponent.class)
+    public void onUse(Entity e, ItemData item) {
+        e.getComponent(HealthComponent.class)
             .ifPresent(hc -> {
                 int currHp = ((HealthComponent) hc).getCurrentHealthpoints();
                 int maxHp = ((HealthComponent) hc).getMaximalHealthpoints();

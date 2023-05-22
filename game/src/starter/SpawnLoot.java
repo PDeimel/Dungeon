@@ -1,5 +1,6 @@
 package starter;
 
+import ecs.entities.Chest;
 import ecs.entities.Entity;
 import ecs.items.ItemDataGenerator;
 import ecs.items.WorldItemBuilder;
