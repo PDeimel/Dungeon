@@ -228,6 +228,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         }
         if (inventoryMenu != null) {
             if (paused) {
+                /*  When the inventory-button is pressed while the game is running, all collected items in the hero's
+                    will be listed and the player has the option if and what items to use via the console. */
                 inventoryMenu.showMenu();
                 getHero().get().getComponent(InventoryComponent.class)
                     .ifPresent(ic -> {
