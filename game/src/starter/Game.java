@@ -12,9 +12,11 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
+import ecs.components.InventoryComponent;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.*;
+import ecs.items.ItemData;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
@@ -225,7 +227,21 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
             systems.forEach(ECS_System::toggleRun);
         }
         if (inventoryMenu != null) {
-            if (paused) inventoryMenu.showMenu();
+            if (paused) {
+                inventoryMenu.showMenu();
+                getHero().get().getComponent(InventoryComponent.class)
+                    .ifPresent(ic -> {
+                        if( ((InventoryComponent) ic).filledSlots() == 0) {
+                            System.out.println("Inventory is empty");
+                        }
+                        else {
+                            List<ItemData> items = ((InventoryComponent) ic).getItems();
+                            for (ItemData item : items) {
+                                System.out.println(item.getItemName() + ": " + item.getDescription());
+                            }
+                        }
+                    });
+            }
             else inventoryMenu.hideMenu();
         }
     }
