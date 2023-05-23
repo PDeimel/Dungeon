@@ -2,6 +2,7 @@ package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.HealthComponent;
+import ecs.components.InventoryComponent;
 import ecs.entities.Entity;
 import ecs.items.*;
 import starter.Game;
@@ -45,6 +46,10 @@ public class Cake extends ItemData implements IOnUse {
                     ((HealthComponent) hc).setCurrentHealthpoints(maxHp);
                     System.out.println("Cake healed full");
                 }
+            });
+        e.getComponent(InventoryComponent.class)
+            .ifPresent(ic -> {
+                ((InventoryComponent) ic).removeItem(this);
             });
     }
 }

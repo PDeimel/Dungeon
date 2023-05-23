@@ -2,21 +2,31 @@ package starter;
 
 import ecs.entities.Chest;
 import ecs.entities.Entity;
+import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
 import ecs.items.WorldItemBuilder;
+import ecs.items.individualitems.Cake;
+import ecs.items.individualitems.RainbowRune;
 import level.IOnLevelLoader;
-import java.util.Random;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A spawnclass similar to SpawnMonsters that, for every newly loaded level, creates a bunch of items wich
  * can then be collected by the hero.
  */
 public class SpawnLoot implements IOnLevelLoader {
-    Random rd = new Random();
     Entity newItem = new Entity();
+
+    List<ItemData> chestItems = new ArrayList<>();
+    Chest chest;
 
     public SpawnLoot() {
         newItem = WorldItemBuilder.buildWorldItem(new ItemDataGenerator().generateItemData());
+        chestItems.add(new RainbowRune());
+        chestItems.add(new Cake());
+        chest = new Chest(chestItems, Game.currentLevel.getRandomTilePoint());
         onLevelLoad();
     }
 
@@ -25,9 +35,9 @@ public class SpawnLoot implements IOnLevelLoader {
      */
     @Override
     public void onLevelLoad() {
-        int ran = rd.nextInt(9);
-        if (ran == 0) {
+        if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
             Game.addEntity(newItem);
+            Game.addEntity(chest);
         }
 
     }

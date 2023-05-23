@@ -2,6 +2,7 @@ package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.HealthComponent;
+import ecs.components.InventoryComponent;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
@@ -75,5 +76,10 @@ public class RainbowRune extends ItemData implements IOnUse {
             new SpawnMonsters(0).onLevelLoad();
             System.out.println("The Rainbow-Rune spawned many monsters.");
         }
+
+        e.getComponent(InventoryComponent.class)
+            .ifPresent(ic -> {
+                ((InventoryComponent) ic).removeItem(this);
+            });
     }
 }

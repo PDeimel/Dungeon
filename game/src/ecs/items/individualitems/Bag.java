@@ -22,4 +22,5 @@ public class Bag extends ItemData{
         );
         WorldItemBuilder.buildWorldItem(this);
     }
+    //TODO: Make the bags inventory functional
 }

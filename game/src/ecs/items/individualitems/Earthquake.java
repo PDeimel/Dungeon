@@ -2,6 +2,7 @@ package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.HealthComponent;
+import ecs.components.InventoryComponent;
 import ecs.damage.Damage;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
@@ -50,5 +51,10 @@ public class Earthquake extends ItemData implements IOnUse {
                 });
         }
         System.out.println("All Units on the floor were damaged by " + DMG + " dmg.");
+
+        e.getComponent(InventoryComponent.class)
+            .ifPresent(ic -> {
+                ((InventoryComponent) ic).removeItem(this);
+            });
     }
 }
