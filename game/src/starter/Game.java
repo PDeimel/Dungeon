@@ -235,9 +235,25 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
                             System.out.println("Inventory is empty");
                         }
                         else {
+                            Scanner sc = new Scanner(System.in);
                             List<ItemData> items = ((InventoryComponent) ic).getItems();
                             for (ItemData item : items) {
                                 System.out.println(item.getItemName() + ": " + item.getDescription());
+                            }
+                            System.out.println("Use item? y for yes, any other button for no");
+                            String input = sc.next();
+                            if(input.equalsIgnoreCase("y")) {
+                                System.out.println("Which item shall be used?");
+                                for(int i = 0; i < items.size(); i++) {
+                                    System.out.println(i + ": " + items.get(i).getItemName());
+                                }
+                                input = sc.next();
+                                try {
+                                    int itemNumber = Integer.parseInt(input);
+                                    items.get(itemNumber).triggerUse(getHero().get());
+                                } catch(Exception e) {
+                                    System.out.println("Item does not exist");
+                                }
                             }
                         }
                     });
