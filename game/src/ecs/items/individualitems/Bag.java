@@ -1,8 +1,6 @@
 package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
-import ecs.entities.Entity;
-import ecs.items.IOnCollect;
 import ecs.items.ItemData;
 import ecs.items.ItemType;
 import ecs.items.WorldItemBuilder;
