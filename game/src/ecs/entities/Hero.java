@@ -29,6 +29,7 @@ public class Hero extends Entity{
     private final int health = 200;
     private Skill firstSkill;
     private Skill secondSkill;
+    private Skill thirdSkill;
     private int invSlots = 5;
 
     /** Entity with Components */
@@ -40,9 +41,10 @@ public class Hero extends Entity{
         setupHitboxComponent();
         setupHealthComponent();
         PlayableComponent pc = new PlayableComponent(this);
-        setupFireballSkill();
+        setupSkill();
         pc.setSkillSlot1(firstSkill);
         pc.setSkillSlot2(secondSkill);
+        pc.setSkillSlot3(thirdSkill);
         //Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
     }
@@ -59,13 +61,18 @@ public class Hero extends Entity{
         new AnimationComponent(this, idleLeft, idleRight);
     }
 
-    private void setupFireballSkill() {
+    private void setupSkill() {
         firstSkill =
                 new Skill(
                         new ArrowSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
 
-        secondSkill= new Skill(
-            new IceBallSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+        secondSkill=
+                new Skill(
+                        new IceBallSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
+
+        thirdSkill=
+                new Skill(
+                        new BodyAttack(),fireballCoolDown);
     }
 
     private void setupHitboxComponent() {

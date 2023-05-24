@@ -18,6 +18,6 @@ public class IceBallSkill extends CurvedDamageProjectileSkill{
             new Damage(1, DamageType.ICE, null),
             new Point(10, 10),
             targetSelection,
-            5f);
+            10f);
     }
 }
