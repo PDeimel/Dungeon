@@ -43,7 +43,7 @@ public class PigMonster extends Monster {
         Animation missingTextureAnimation = new Animation(List.of("animation/missingTexture.png"), 100);
 
         /**
-         *Added a new HealthComponent to Monster, with this Component the Monter can die
+         *Added a new HealthComponent to Monster, with this Component the Monster can die
          * if the Life of Monster is lower than null or equal, the HealthSystem will remove the Entity
          */
         new HealthComponent(this, 100, (Entity e) -> {

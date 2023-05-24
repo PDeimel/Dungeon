@@ -10,8 +10,6 @@ public class ProjectileSystem extends ECS_System {
 
     // private record to hold all data during streaming
 
-
-
     private record PSData(
             Entity e, ProjectileComponent prc, PositionComponent pc, VelocityComponent vc) {}
 
@@ -51,30 +49,37 @@ public class ProjectileSystem extends ECS_System {
 
     }
 
-        /**
-         Method aplly curve to Projectile with changes in y or x Achse, or change the direction with changes  only on Y Achse
-         verify, if the velocity in both Achses y und x to decide where will apply the decay factor
-         Verify, if the traveled distance of projectile bigger or smaller
-         if bigger, we change the values of velocity in Y-Achse to negative and then we have other tipe of Movement
-         after a determinate distance
-         */
-
+    /**
+     * Updates the position of a projectile based on its characteristics.
+     *
+     *
+     * If the projectile is curving, this method alters the projectile's position on either the x or y axis,
+     * depending on which velocity is greater, and applies a decay factor proportional to the distance
+     * travelled from the start.
+     * Otherwise, if the distance travelled is greater than a predefined value,
+     * the projectile's y velocity is reversed to alter the direction of motion.
+     *
+     * @param data A PSData object containing the characteristics of the projectile, including the entity,
+     * the projectile component, the position component, and the velocity component.
+     * @return A PSData object updated with the new position of the projectile.
+     */
     private PSData updateProjectilePosition(PSData data) {
         if (data.prc.isCurving()) {
-            float decayFactor = 0.5f;
+            float decayFactor = 0.2f;
             float distanceFromStart = Point.calculateDistance(data.pc.getPosition(), data.prc.getStartPosition());
 
 
             if (Math.abs(data.vc.getXVelocity()) > Math.abs(data.vc.getYVelocity())) {
 
-                data.pc.getPosition().y -= decayFactor * distanceFromStart;
+                data.pc.getPosition().y -= decayFactor * distanceFromStart; // je weiter entfernt vom Anfang ich bin,
+                // desto großer ist die Differenz bei y
             } else {
 
                 data.pc.getPosition().x -= decayFactor * distanceFromStart;
             }
         } else {
 
-            float distance= 2.5f; // Abstand um die Richtung zu ändern
+            float distance= 1.75f; // Abstand um die Richtung zu ändern
             float distanceFromStart = Point.calculateDistance(data.pc.getPosition(), data.prc.getStartPosition());
             if (distanceFromStart > distance) {
                 data.vc.setCurrentYVelocity(-Math.abs(data.vc.getYVelocity()));

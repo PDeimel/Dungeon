@@ -36,6 +36,16 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
         this.selectionFunction = selectionFunction;
     }
 
+    /**
+     * create an entity witch is used as projectile
+     *
+     * the Entity receives all components that are necessary to represent a Projectile
+     * uses the new Constructor for ProjectileComponent to determinate if the Projectile is
+     * curved or not
+     *
+     *
+     * @param entity which uses the skill
+     */
     @Override
     public void execute(Entity entity) {
         Entity projectile = new Entity();
@@ -79,13 +89,6 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
         new HitboxComponent(
             projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
 
-        /**
-         *Markierung für curved-Projectile
-         */
         new ProjectileTag(projectile);
-
-
-
-
     }
 }
