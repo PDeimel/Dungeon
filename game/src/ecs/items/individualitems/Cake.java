@@ -20,7 +20,6 @@ public class Cake extends ItemData implements IOnUse {
             "Cake",
             "A delicious cake that restores your health to up to 20 HP."
         );
-        WorldItemBuilder.buildWorldItem(this);
         this.setOnUse(this);
     }
 
