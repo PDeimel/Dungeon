@@ -12,12 +12,15 @@ import configuration.Configuration;
 import configuration.KeyboardConfig;
 import controller.AbstractController;
 import controller.SystemController;
+import ecs.components.InventoryComponent;
 import ecs.components.MissingComponentException;
 import ecs.components.PositionComponent;
 import ecs.entities.*;
+import ecs.items.ItemData;
 import ecs.systems.*;
 import graphic.DungeonCamera;
 import graphic.Painter;
+import graphic.hud.InventoryMenu;
 import graphic.hud.PauseMenu;
 import java.io.IOException;
 import java.util.*;
@@ -70,6 +73,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
 
     public static ILevel currentLevel;
     private static PauseMenu<Actor> pauseMenu;
+    private static InventoryMenu<Actor> inventoryMenu;
     private static Entity hero;
     private Logger gameLogger;
     /** Saves the amount of levels the hero has traversed */
@@ -115,7 +119,9 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         systems = new SystemController();
         controller.add(systems);
         pauseMenu = new PauseMenu<>();
+        inventoryMenu = new InventoryMenu<>();
         controller.add(pauseMenu);
+        controller.add(inventoryMenu);
         hero = new Hero();
         levelAPI = new LevelAPI(batch, painter, new WallGenerator(new RandomWalkGenerator()), this);
         levelAPI.loadLevel(LEVELSIZE);
@@ -128,6 +134,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         manageEntitiesSets();
         getHero().ifPresent(this::loadNextLevelIfEntityIsOnEndTile);
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) togglePause();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) toggleInventory();
     }
 
     @Override
@@ -136,7 +143,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
         SpawnMonsters spawnMonsters = new SpawnMonsters(levelReached);
-
+        SpawnLoot spawnLoot = new SpawnLoot();
         Trap t = new Trap();
     }
 
@@ -211,6 +218,49 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (pauseMenu != null) {
             if (paused) pauseMenu.showMenu();
             else pauseMenu.hideMenu();
+        }
+    }
+
+    public static void toggleInventory() {
+        paused = !paused;
+        if (systems != null) {
+            systems.forEach(ECS_System::toggleRun);
+        }
+        if (inventoryMenu != null) {
+            if (paused) {
+                /*  When the inventory-button is pressed while the game is running, all collected items in the hero's
+                    will be listed and the player has the option if and what items to use via the console. */
+                inventoryMenu.showMenu();
+                getHero().get().getComponent(InventoryComponent.class)
+                    .ifPresent(ic -> {
+                        if( ((InventoryComponent) ic).filledSlots() == 0) {
+                            System.out.println("Inventory is empty");
+                        }
+                        else {
+                            Scanner sc = new Scanner(System.in);
+                            List<ItemData> items = ((InventoryComponent) ic).getItems();
+                            for (ItemData item : items) {
+                                System.out.println(item.getItemName() + ": " + item.getDescription());
+                            }
+                            System.out.println("Use item? y for yes, any other button for no");
+                            String input = sc.next();
+                            if(input.equalsIgnoreCase("y")) {
+                                System.out.println("Which item shall be used?");
+                                for(int i = 0; i < items.size(); i++) {
+                                    System.out.println(i + ": " + items.get(i).getItemName());
+                                }
+                                input = sc.next();
+                                try {
+                                    int itemNumber = Integer.parseInt(input);
+                                    items.get(itemNumber).triggerUse(getHero().get());
+                                } catch(Exception e) {
+                                    System.out.println("Item does not exist");
+                                }
+                            }
+                        }
+                    });
+            }
+            else inventoryMenu.hideMenu();
         }
     }
 

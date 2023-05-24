@@ -1,6 +1,10 @@
 package ecs.items;
 
-import graphic.Animation;
+import ecs.items.individualitems.Bag;
+import ecs.items.individualitems.Cake;
+import ecs.items.individualitems.Earthquake;
+import ecs.items.individualitems.RainbowRune;
+
 import java.util.List;
 import java.util.Random;
 
@@ -8,26 +12,14 @@ import java.util.Random;
 public class ItemDataGenerator {
     private static final List<String> missingTexture = List.of("animation/missingTexture.png");
 
+    //Every type of item created is put into the template-list
     private List<ItemData> templates =
             List.of(
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Buch",
-                            "Ein sehr lehrreiches Buch."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Tuch",
-                            "Ein sauberes Tuch.."),
-                    new ItemData(
-                            ItemType.Basic,
-                            new Animation(missingTexture, 1),
-                            new Animation(missingTexture, 1),
-                            "Namensschild",
-                            "Ein Namensschild wo der Name nicht mehr lesbar ist.."));
+                new Bag(),
+                new Cake(),
+                new Earthquake(),
+                new RainbowRune()
+            );
     private Random rand = new Random();
 
     /**
