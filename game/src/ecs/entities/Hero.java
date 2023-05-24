@@ -10,6 +10,7 @@ import ecs.components.collision.HeroCollisionOut;
 import ecs.components.skill.*;
 import graphic.Animation;
 
+
 /**
  * The Hero is the player character. It's entity in the ECS. This class helps to set up the hero with
  * all its components and attributes .
@@ -28,6 +29,7 @@ public class Hero extends Entity{
     private final int health = 200;
     private Skill firstSkill;
     private Skill secondSkill;
+    private int invSlots = 5;
 
     /** Entity with Components */
     public Hero() {
@@ -42,7 +44,7 @@ public class Hero extends Entity{
         pc.setSkillSlot1(firstSkill);
         pc.setSkillSlot2(secondSkill);
         //Added the Inventory to the hero
-        new InventoryComponent(this, 5);
+        new InventoryComponent(this, invSlots);
     }
 
     private void setupVelocityComponent() {
@@ -66,7 +68,6 @@ public class Hero extends Entity{
             new IceBallSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
     }
 
-
     private void setupHitboxComponent() {
         new HitboxComponent(
                 this,
@@ -85,5 +86,4 @@ public class Hero extends Entity{
                 dieAnimation
         );
     }
-
 }
