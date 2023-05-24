@@ -2,6 +2,7 @@ package ecs.systems;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
+import ecs.components.InventoryComponent;
 import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.VelocityComponent;
