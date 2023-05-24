@@ -26,7 +26,6 @@ public class RainbowRune extends ItemData implements IOnUse {
             "Rainbow-Rune",
             "A shiny colorful rune that grants a random effect. Always gamble children!"
         );
-        WorldItemBuilder.buildWorldItem(this);
         this.setOnUse(this);
     }
 

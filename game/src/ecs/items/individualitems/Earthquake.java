@@ -25,7 +25,6 @@ public class Earthquake extends ItemData implements IOnUse {
             "Earthquake",
             "An Earthquake which damages all units in the current level."
         );
-        WorldItemBuilder.buildWorldItem(this);
         this.setOnUse(this);
     }
 

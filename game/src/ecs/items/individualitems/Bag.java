@@ -1,6 +1,7 @@
 package ecs.items.individualitems;
 
 import dslToGame.AnimationBuilder;
+import ecs.components.InventoryComponent;
 import ecs.items.ItemData;
 import ecs.items.ItemType;
 import ecs.items.WorldItemBuilder;
@@ -18,7 +19,6 @@ public class Bag extends ItemData{
             "Bag",
             "A shabby old bag that can carry a few items."
         );
-        WorldItemBuilder.buildWorldItem(this);
     }
     //TODO: Make the bags inventory functional
 }
