@@ -3,6 +3,7 @@ package ecs.components.collision;
 import ecs.components.HealthComponent;
 import ecs.components.PositionComponent;
 import ecs.components.ai.AITools;
+import ecs.components.skill.BodyAttackComponent;
 import ecs.components.skill.ProjectileComponent;
 import ecs.entities.Entity;
 import level.elements.tile.Tile;
@@ -12,68 +13,76 @@ import java.util.List;
 
 public class MonsterCollisionEnter implements ICollide {
 
-    private static final float MAX_DISTANCE = 0.25f;
-
+    private static final float MAX_DISTANCE = 0.1f;
 
     /**
-     * Method filter The Entities that are in Collision, both have a HitboxComponent
-     * a small distance is given to PositionComponent of Monster.
+     * Handles a collision between two entities. If one of the entities is a monster and
+     * the other is an attacker (with a projectile or body attack component),
+     * damage and knockback is applied to the monster.
      *
-     *
-     * @param a is the current Entity
-     * @param b is the Entity with whom the Collision happened
-     * @param from the direction from a to b
+     * @param a the first entity involved in the collision
+     * @param b the second entity involved in the collision
+     * @param from the direction from the first entity to the second
      */
 
     @Override
     public void onCollision(Entity a, Entity b, Tile.Direction from) {
         Entity monster = null;
-        Entity projectile = null;
+        Entity attacker = null;
 
-        if (a.getComponent(HealthComponent.class).isPresent() && b.getComponent(ProjectileComponent.class).isPresent()) {
+        if (a.getComponent(HealthComponent.class).isPresent() &&
+            (b.getComponent(ProjectileComponent.class).isPresent() || b.getComponent(BodyAttackComponent.class).isPresent())) {
             monster = a;
-            projectile = b;
-        } else if (a.getComponent(ProjectileComponent.class).isPresent() && b.getComponent(HealthComponent.class).isPresent()) {
+            attacker = b;
+        } else if ((a.getComponent(ProjectileComponent.class).isPresent() || a.getComponent(BodyAttackComponent.class).isPresent()) &&
+            b.getComponent(HealthComponent.class).isPresent()) {
             monster = b;
-            projectile = a;
+            attacker = a;
         }
 
-        if (monster != null && projectile != null) {
+        if (monster != null && attacker != null) {
             PositionComponent monsterPosition = (PositionComponent) monster.getComponent(PositionComponent.class)
                 .orElseThrow(() -> new IllegalStateException("Monster entity does not have a position component"));
 
-            Point projectilePosition = ((PositionComponent) projectile.getComponent(PositionComponent.class)
-                .orElseThrow(() -> new IllegalStateException("Projectile entity does not have a position component")))
+            Point attackerPosition = ((PositionComponent) attacker.getComponent(PositionComponent.class)
+                .orElseThrow(() -> new IllegalStateException("Attacker entity does not have a position component")))
                 .getPosition();
 
-            Tile farthestAccessibleTile = findFarthestAccessibleTile(monsterPosition.getPosition(), projectilePosition, MAX_DISTANCE);
+            Tile farthestAccessibleTile = findFarthestAccessibleTile(monsterPosition.getPosition(), attackerPosition, MAX_DISTANCE);
 
             if (farthestAccessibleTile != null) {
                 monsterPosition.setPosition(farthestAccessibleTile.getCoordinateAsPoint());
             }
         }
-
-
     }
-    // Method used to find the farthest File to Monster, once a Monster receive a hit with Projectile
-    //
 
-    private Tile findFarthestAccessibleTile(Point monsterPosition, Point projectilePosition, float maxDistance) {
+    /**
+     * Finds the farthest accessible tile from the monster's position,
+     * within a specified maximum distance.
+     * This tile represents the position where the monster will be moved to when
+     * it receives an attack.
+     *
+     * @param monsterPosition the current position of the monster
+     * @param attackPosition the position of the attacker
+     * @param maxDistance the maximum distance to look for an accessible tile
+     * @return the farthest accessible tile, or null if none was found
+     */
+
+    private Tile findFarthestAccessibleTile(Point monsterPosition, Point attackPosition, float maxDistance) {
         List<Tile> accessibleTiles = AITools.getAccessibleTilesInRange(monsterPosition, maxDistance);
 
         Tile farthestAccessibleTile = null;
         float maxDistanceFound = 0;
         for (Tile tile : accessibleTiles) {
             Point tilePosition = tile.getCoordinateAsPoint();
-            float distance = Point.calculateDistance(tilePosition, projectilePosition);
+            float distance = Point.calculateDistance(tilePosition, attackPosition);
             if (distance > maxDistanceFound) {
                 maxDistanceFound = distance;
                 farthestAccessibleTile = tile;
             }
         }
-
         return farthestAccessibleTile;
     }
-    }
+}
 
 

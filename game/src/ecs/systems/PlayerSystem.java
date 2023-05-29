@@ -2,6 +2,7 @@ package ecs.systems;
 
 import com.badlogic.gdx.Gdx;
 import configuration.KeyboardConfig;
+import ecs.components.InventoryComponent;
 import ecs.components.MissingComponentException;
 import ecs.components.PlayableComponent;
 import ecs.components.VelocityComponent;
@@ -40,6 +41,8 @@ public class PlayerSystem extends ECS_System {
             ksd.pc.getSkillSlot1().ifPresent(skill -> skill.execute(ksd.e));
         else if (Gdx.input.isKeyPressed(KeyboardConfig.SECOND_SKILL.get()))
             ksd.pc.getSkillSlot2().ifPresent(skill -> skill.execute(ksd.e));
+        else if (Gdx.input.isKeyPressed(KeyboardConfig.THIRD_SKILL.get()))
+            ksd.pc.getSkillSlot3().ifPresent(skill -> skill.execute(ksd.e));
     }
 
     private KSData buildDataObject(PlayableComponent pc) {

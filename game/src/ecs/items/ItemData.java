@@ -43,15 +43,15 @@ public class ItemData {
      * @param damageModifier
      */
     public ItemData(
-            ItemType itemType,
-            Animation inventoryTexture,
-            Animation worldTexture,
-            String itemName,
-            String description,
-            IOnCollect onCollect,
-            IOnDrop onDrop,
-            IOnUse onUse,
-            DamageModifier damageModifier) {
+        ItemType itemType,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description,
+        IOnCollect onCollect,
+        IOnDrop onDrop,
+        IOnUse onUse,
+        DamageModifier damageModifier) {
         this.itemType = itemType;
         this.inventoryTexture = inventoryTexture;
         this.worldTexture = worldTexture;
@@ -73,30 +73,30 @@ public class ItemData {
      * @param description
      */
     public ItemData(
-            ItemType itemType,
-            Animation inventoryTexture,
-            Animation worldTexture,
-            String itemName,
-            String description) {
+        ItemType itemType,
+        Animation inventoryTexture,
+        Animation worldTexture,
+        String itemName,
+        String description) {
         this(
-                itemType,
-                inventoryTexture,
-                worldTexture,
-                itemName,
-                description,
-                ItemData::defaultCollect,
-                ItemData::defaultDrop,
-                ItemData::defaultUseCallback,
-                new DamageModifier());
+            itemType,
+            inventoryTexture,
+            worldTexture,
+            itemName,
+            description,
+            ItemData::defaultCollect,
+            ItemData::defaultDrop,
+            ItemData::defaultUseCallback,
+            new DamageModifier());
     }
 
     public ItemData() {
         this(
-                ItemConfig.TYPE.get(),
-                new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
-                new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
-                ItemConfig.NAME.get(),
-                ItemConfig.DESCRIPTION.get());
+            ItemConfig.TYPE.get(),
+            new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
+            new Animation(List.of(ItemConfig.TEXTURE.get()), 1),
+            ItemConfig.NAME.get(),
+            ItemConfig.DESCRIPTION.get());
     }
 
     /**
@@ -157,11 +157,11 @@ public class ItemData {
      */
     private static void defaultUseCallback(Entity e, ItemData item) {
         e.getComponent(InventoryComponent.class)
-                .ifPresent(
-                        component -> {
-                            InventoryComponent invComp = (InventoryComponent) component;
-                            invComp.removeItem(item);
-                        });
+            .ifPresent(
+                component -> {
+                    InventoryComponent invComp = (InventoryComponent) component;
+                    invComp.removeItem(item);
+                });
         System.out.printf("Item \"%s\" used by entity %d\n", item.getItemName(), e.id);
     }
 
@@ -175,28 +175,28 @@ public class ItemData {
 
     private static void defaultCollect(Entity worldItem, Entity whoCollected) {
         Game.getHero()
-                .ifPresent(
-                        hero -> {
-                            if (whoCollected.equals(hero)) {
-                                hero.getComponent(InventoryComponent.class)
-                                        .ifPresent(
-                                                (x) -> {
-                                                    if (((InventoryComponent) x)
-                                                            .addItem(
-                                                                    worldItem
-                                                                            .getComponent(
-                                                                                    ItemComponent
-                                                                                            .class)
-                                                                            .map(
-                                                                                    ItemComponent
-                                                                                                    .class
-                                                                                            ::cast)
-                                                                            .get()
-                                                                            .getItemData()))
-                                                        Game.removeEntity(worldItem);
-                                                });
-                            }
-                        });
+            .ifPresent(
+                hero -> {
+                    if (whoCollected.equals(hero)) {
+                        hero.getComponent(InventoryComponent.class)
+                            .ifPresent(
+                                (x) -> {
+                                    if (((InventoryComponent) x)
+                                        .addItem(
+                                            worldItem
+                                                .getComponent(
+                                                    ItemComponent
+                                                        .class)
+                                                .map(
+                                                    ItemComponent
+                                                        .class
+                                                        ::cast)
+                                                .get()
+                                                .getItemData()))
+                                        Game.removeEntity(worldItem);
+                                });
+                    }
+                });
     }
 
     public IOnCollect getOnCollect() {
