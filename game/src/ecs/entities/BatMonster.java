@@ -8,24 +8,19 @@ import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.damage.Damage;
-import ecs.damage.DamageType;
-import graphic.Animation;
-
-import java.util.List;
 
 /** A monster resembling a bat which is exceptionally fast and tries to hunt down the hero */
-public class BatMonster extends Monster{
+public class BatMonster extends Monster {
 
     private final float XSPEED = 0.2f;
     private final float YSPEED = 0.2f;
     private final int HEALTH = 10;
     private final int LOOTXP = 10;
     private IFightAI iFightAI = new CollideAI(0.2f);
-    private IIdleAI idleAI = new PatrouilleWalk(5f,10,20, PatrouilleWalk.MODE.RANDOM);
+    private IIdleAI idleAI = new PatrouilleWalk(5f, 10, 20, PatrouilleWalk.MODE.RANDOM);
     private ITransition transition = new RangeTransition(4f);
 
-    public BatMonster(){
+    public BatMonster() {
         super();
         super.setxSpeed(XSPEED);
         super.setySpeed(YSPEED);
@@ -37,12 +32,17 @@ public class BatMonster extends Monster{
         super.setIdleRight();
         super.setDmg(7);
         new PositionComponent(this);
-        new AnimationComponent(this,super.getIdleLeft(),super.getIdleRight());
-        new VelocityComponent(this,super.getxSpeed(),super.getySpeed(),super.getIdleLeft(),super.getIdleRight());
-        new HitboxComponent(this,super.getMonsterCollisionEnter(),super.getMonsterCollisionOut());
-        new AIComponent(this,iFightAI,idleAI,transition);
-        super.setUpHealthComponent(HEALTH, LOOTXP);
-
-
+        new AnimationComponent(this, super.getIdleLeft(), super.getIdleRight());
+        new VelocityComponent(
+                this,
+                super.getxSpeed(),
+                super.getySpeed(),
+                super.getIdleLeft(),
+                super.getIdleRight());
+        new HitboxComponent(this, super.getMonsterCollisionEnter(), super.getMonsterCollisionOut());
+        new AIComponent(this, iFightAI, idleAI, transition);
+        super.setUpHealthComponent(HEALTH);
+        super.setUpXPComponent(LOOTXP);
+        ;
     }
 }
