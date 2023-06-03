@@ -1,9 +1,15 @@
 package ecs.entities;
 
 import dslToGame.AnimationBuilder;
+import ecs.components.HealthComponent;
 import ecs.components.collision.MonsterCollisionEnter;
 import ecs.components.collision.MonsterCollisionOut;
+import ecs.components.xp.XPComponent;
 import graphic.Animation;
+import starter.Game;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * An abstract class used to create and distinct different monsters which will be obstacles to the hero.
@@ -20,7 +26,9 @@ public abstract class Monster extends Entity {
     private Animation idleRight;
     private MonsterCollisionEnter monsterCollisionEnter= new MonsterCollisionEnter();
     private MonsterCollisionOut monsterCollisionOut= new MonsterCollisionOut();
+    Animation missingTextureAnimation = new Animation(List.of("animation/missingTexture.png"), 100);
     private int dmg;
+    private int xp;
 
     public float getxSpeed() {
         return xSpeed;
@@ -81,5 +89,14 @@ public abstract class Monster extends Entity {
     }
     public void setDmg(int dmg) {
         this.dmg = dmg;
+    }
+
+    public void setUpHealthComponent(int health, int xp) {
+        new HealthComponent(this, health, (Entity e) -> {
+            HealthComponent hc= (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
+            Hero hero = (Hero) Game.getHero().orElseThrow();
+            XPComponent xpc = (XPComponent) hero.getComponent(XPComponent.class).orElseThrow();
+            xpc.addXP(xp);
+        }, missingTextureAnimation, missingTextureAnimation);
     }
 }
