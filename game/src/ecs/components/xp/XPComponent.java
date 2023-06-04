@@ -5,7 +5,7 @@ import ecs.entities.Entity;
 
 public class XPComponent extends Component {
 
-    private static final double LEVEL_1_XP = 100;
+    private static final double LEVEL_1_XP = 1;
     private static final double FORMULA_SLOPE = 0.5;
     private long currentLevel;
     private long currentXP;
