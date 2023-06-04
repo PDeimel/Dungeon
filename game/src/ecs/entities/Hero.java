@@ -51,6 +51,7 @@ public class Hero extends Entity {
         pc.setSkillSlot2(secondSkill);
         // Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
+        setupXPComponent();
         levelUp = (long nextLevel) -> {
             this.getComponent(HealthComponent.class)
                 .ifPresent(
@@ -75,19 +76,18 @@ public class Hero extends Entity {
             switch ((int) nextLevel) {
                 case 5 -> {
                     pc.setSkillSlot3(thirdSkill);
-                    heroLogger.info("The ability 'BodyAttack' has been unlocked");
+                    heroLogger.info("The ability 'BodyAttack' has been unlocked.");
                 }
                 case 10 -> {
                     // pc.setSkillSlot4;
-                    heroLogger.info("The ability 'Steroids' has been unlocked");
+                    heroLogger.info("The ability 'Steroids' has been unlocked.");
                 }
                 case 20 -> {
                     // pc.setSkillSlot5;
-                    heroLogger.info("The ability 'Chronobreak' has been unlocked");
+                    heroLogger.info("The ability 'Chronobreak' has been unlocked.");
                 }
             }
         };
-        setupXPComponent();
     }
 
     private void setupVelocityComponent() {
