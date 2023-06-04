@@ -18,7 +18,7 @@ public class WormMonster extends Monster {
     private final float XSPEED = 0.05f;
     private final float YSPEED = 0.1f;
     private final int HEALTH = 5;
-    private final int LOOTXP = 200;
+    private final int LOOTXP = 7;
     private IFightAI iFightAI = new CollideAI(0.05f);
     private IIdleAI idleAI = new RadiusWalk(15, 10);
     private ITransition transition = new RangeTransition(2f);

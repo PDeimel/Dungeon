@@ -7,6 +7,9 @@ import ecs.components.collision.MonsterCollisionOut;
 import ecs.components.xp.XPComponent;
 import graphic.Animation;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Logger;
+
 import starter.Game;
 
 /**
@@ -27,7 +30,7 @@ public abstract class Monster extends Entity {
     private MonsterCollisionOut monsterCollisionOut = new MonsterCollisionOut();
     Animation missingTextureAnimation = new Animation(List.of("animation/missingTexture.png"), 100);
     private int dmg;
-    private int xp;
+    private Logger monsterLogger = Logger.getLogger(this.getClass().getName());
 
     public float getxSpeed() {
         return xSpeed;
@@ -109,6 +112,12 @@ public abstract class Monster extends Entity {
         this.dmg = dmg;
     }
 
+    /**
+     * Enables the monster to die and once that happens it transfers it's loot-Xp
+     * to the hero's XPComponent.
+     *
+     * @param health The HP of the monster
+     */
     public void setUpHealthComponent(int health) {
         new HealthComponent(
                 this,
@@ -117,7 +126,8 @@ public abstract class Monster extends Entity {
                     Game.getHero()
                         .get()
                         .getComponent(XPComponent.class)
-                        .ifPresent(xpc -> ((XPComponent) xpc).addXP(this.xp));
+                        .ifPresent(xpc ->
+                            ((XPComponent) xpc).addXP(getLootXP()));
                     HealthComponent hc =
                             (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
                 },
@@ -125,7 +135,20 @@ public abstract class Monster extends Entity {
                 missingTextureAnimation);
     }
 
+    /**
+     * Gives the monster an XPComponent, to use it's lootXP-Parameter
+     *
+     * @param lootXP The XP the entity grants when killed
+     */
     public void setUpXPComponent(int lootXP) {
         new XPComponent(this, (long nextLevel) -> {}, lootXP);
+    }
+
+    private long getLootXP() {
+        AtomicLong xp = new AtomicLong();
+        this.getComponent(XPComponent.class).ifPresent(xpc -> {
+            xp.set(((XPComponent) xpc).getLootXP());
+        });
+        return xp.get();
     }
 }
