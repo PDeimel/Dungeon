@@ -37,7 +37,7 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
     /**
      * create an entity witch is used as projectile
      *
-     * <p>the Entity receives all components that are necessary to represent a Projectile uses the
+     * The Entity receives all components that are necessary to represent a Projectile uses the
      * new Constructor for ProjectileComponent to determinate if the Projectile is curved or not
      *
      * @param entity which uses the skill
@@ -63,7 +63,7 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
                 SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
 
         new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        /***
+        /**
          * Constructor of Projectile Component receives  true parameter , Projectile turns curved(
          * Variable used in
          * ProjectileSystem)

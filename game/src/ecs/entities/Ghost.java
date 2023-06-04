@@ -98,9 +98,7 @@ public class Ghost extends Monster {
 
     private void setUpHitboxComponent() {
         new HitboxComponent(
-                this,
-                (player, ghost, direction) -> System.out.println("Collides with ghost"),
-                (player, ghost, direction) -> System.out.println("Leaves ghost collision"));
+                this, (player, ghost, direction) -> {}, (player, ghost, direction) -> {});
     }
 
     private void setUpPositionComponent() {
