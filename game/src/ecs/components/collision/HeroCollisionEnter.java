@@ -13,7 +13,8 @@ public class HeroCollisionEnter implements ICollide {
     @Override
     public void onCollision(Entity a, Entity b, Tile.Direction from) {
         if (a instanceof Hero && b instanceof Monster) {
-            HealthComponent heroHealth =(HealthComponent) a.getComponent(HealthComponent.class).orElse(null);
+            HealthComponent heroHealth =
+                    (HealthComponent) a.getComponent(HealthComponent.class).orElse(null);
             if (heroHealth != null) {
                 int monsterDamageAmount = ((Monster) b).getDmg();
                 DamageType monsterDamageType = DamageType.PHYSICAL;

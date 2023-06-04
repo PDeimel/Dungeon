@@ -3,7 +3,6 @@ package ecs.components.skill;
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.collision.ICollide;
-import ecs.components.xp.ProjectileTag;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -57,7 +56,7 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
                 SkillTools.calculateVelocity(epc.getPosition(), targetPoint, projectileSpeed);
         VelocityComponent vc =
                 new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
-        new ProjectileComponent(projectile, epc.getPosition(), targetPoint,false);
+        new ProjectileComponent(projectile, epc.getPosition(), targetPoint, false);
         ICollide collide =
                 (a, b, from) -> {
                     if (b != entity) {
@@ -72,12 +71,5 @@ public abstract class DamageProjectileSkill implements ISkillFunction {
 
         new HitboxComponent(
                 projectile, new Point(0.25f, 0.25f), projectileHitboxSize, collide, null);
-
-        /**
-         *Markierung für curved-Projectile
-         */
-        new ProjectileTag(projectile);
-
-
     }
 }
