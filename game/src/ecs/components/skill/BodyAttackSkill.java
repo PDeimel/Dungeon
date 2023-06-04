@@ -34,9 +34,7 @@ public class BodyAttackSkill implements ISkillFunction {
     @Override
 
     /**
-     * create an entity and uses it as attack
-     *
-     * <p>Create one entity with the necessary componets to realize an attack the attack happens
+     * Create one entity with the necessary components to realize an attack the attack happens
      * only near to hero, the position of hero is the same position of attack @Entity who uses the
      * attack
      */

@@ -18,8 +18,9 @@ public class PlayableComponent extends Component {
 
     private Skill skillSlot1;
     private Skill skillSlot2;
-
     private Skill skillSlot3;
+    private Skill skillSlot4;
+    private Skill skillSLot5;
 
     /**
      * @param entity associated entity
@@ -100,5 +101,30 @@ public class PlayableComponent extends Component {
      */
     public void setSkillSlot3(Skill skillSlot3) {
         this.skillSlot3 = skillSlot3;
+    }
+
+    /**
+     * @return skill on third skill slot
+     */
+    public Skill getSkillSlot4() {
+        return skillSlot4;
+    }
+    /**
+     * @param skillSlot4 skill that will be on the third skill slot
+     */
+    public void setSkillSlot4(Skill skillSlot4) {
+        this.skillSlot4 = skillSlot4;
+    }
+    /**
+     * @return skill on third skill slot
+     */
+    public Skill getSkillSLot5() {
+        return skillSLot5;
+    }
+    /**
+     * @param skillSLot5 skill that will be on the third skill slot
+     */
+    public void setSkillSLot5(Skill skillSLot5) {
+        this.skillSLot5 = skillSLot5;
     }
 }

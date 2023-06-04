@@ -33,6 +33,9 @@ public class Hero extends Entity {
     private Skill firstSkill;
     private Skill secondSkill;
     private Skill thirdSkill;
+    private Skill fourthSkill;
+    private Skill fifthSkill;
+    private int invSlots = 5;
     private final ILevelUp levelUp;
     private final Logger heroLogger;
 
@@ -79,11 +82,11 @@ public class Hero extends Entity {
                     heroLogger.info("The ability 'BodyAttack' has been unlocked.");
                 }
                 case 10 -> {
-                    // pc.setSkillSlot4;
+                    pc.setSkillSlot4(fourthSkill);
                     heroLogger.info("The ability 'Steroids' has been unlocked.");
                 }
                 case 20 -> {
-                    // pc.setSkillSlot5;
+                    pc.setSkillSlot5(fifthSkill);
                     heroLogger.info("The ability 'Chronobreak' has been unlocked.");
                 }
             }
@@ -110,6 +113,11 @@ public class Hero extends Entity {
                 new Skill(new IceBallSkill(SkillTools::getCursorPositionAsPoint), fireballCoolDown);
 
         thirdSkill = new Skill(new BodyAttack(), fireballCoolDown);
+
+        fourthSkill = new Skill(new ChronoBreakSkill(), fireballCoolDown);
+
+        fifthSkill = new Skill(new SteroidsSkill(), fireballCoolDown);
+
     }
 
     private void setupHitboxComponent() {
