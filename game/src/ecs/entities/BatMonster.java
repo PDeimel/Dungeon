@@ -43,6 +43,5 @@ public class BatMonster extends Monster {
         new AIComponent(this, iFightAI, idleAI, transition);
         super.setUpHealthComponent(HEALTH);
         super.setUpXPComponent(LOOTXP);
-        ;
     }
 }

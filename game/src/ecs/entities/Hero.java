@@ -29,12 +29,11 @@ public class Hero extends Entity {
     private final String pathToGetHit = "knight/hit";
     private final String pathToDie = "knight/death";
     private final int health = 100;
+    private final int invSlots = 5;
     private Skill firstSkill;
     private Skill secondSkill;
     private Skill thirdSkill;
-    private int invSlots = 5;
-    private ILevelUp levelUp;
-
+    private final ILevelUp levelUp;
     private final Logger heroLogger;
 
     /** Entity with Components */
@@ -50,13 +49,13 @@ public class Hero extends Entity {
         setupSkill();
         pc.setSkillSlot1(firstSkill);
         pc.setSkillSlot2(secondSkill);
-        pc.setSkillSlot3(thirdSkill);
         // Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
         levelUp = (long nextLevel) -> {
             this.getComponent(HealthComponent.class)
                 .ifPresent(
                     hc -> {
+                        // Grants +5 MaxHP per Level
                         ((HealthComponent) hc)
                             .setMaximalHealthpoints(
                                 ((HealthComponent) hc).getMaximalHealthpoints() + 5);
@@ -64,6 +63,7 @@ public class Hero extends Entity {
             this.getComponent(VelocityComponent.class)
                 .ifPresent(
                     vc -> {
+                        // Grants a small movement buff each level
                         ((VelocityComponent) vc)
                             .setCurrentXVelocity(
                                 ((VelocityComponent) vc).getCurrentXVelocity() + 0.05f);
@@ -74,10 +74,14 @@ public class Hero extends Entity {
             heroLogger.info("You have reached Level " + nextLevel + ". Your max health and movement speed have been increased.");
             switch ((int) nextLevel) {
                 case 5 -> {
+                    pc.setSkillSlot3(thirdSkill);
+                    heroLogger.info("The ability 'BodyAttack' has been unlocked");
+                }
+                case 10 -> {
                     // pc.setSkillSlot4;
                     heroLogger.info("The ability 'Steroids' has been unlocked");
                 }
-                case 10 -> {
+                case 20 -> {
                     // pc.setSkillSlot5;
                     heroLogger.info("The ability 'Chronobreak' has been unlocked");
                 }
@@ -121,5 +125,4 @@ public class Hero extends Entity {
     private void setupXPComponent() {
         new XPComponent(this, levelUp);
     }
-
 }
