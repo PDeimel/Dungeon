@@ -1,4 +1,4 @@
-package ecs.components.xp;
+package ecs.components;
 
 import ecs.components.Component;
 import ecs.entities.Entity;

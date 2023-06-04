@@ -8,6 +8,7 @@ import ecs.entities.Entity;
 import graphic.Animation;
 import starter.Game;
 import tools.Point;
+import ecs.components.ProjectileTag;
 
 public abstract class DamageProjectileSkill implements ISkillFunction {
 
