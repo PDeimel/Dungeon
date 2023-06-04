@@ -53,7 +53,6 @@ public class Hero extends Entity {
         pc.setSkillSlot2(secondSkill);
         // Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
-        setupXPComponent();
         levelUp = (long nextLevel) -> {
             this.getComponent(HealthComponent.class)
                 .ifPresent(
@@ -90,6 +89,7 @@ public class Hero extends Entity {
                 }
             }
         };
+        setupXPComponent();
     }
 
     private void setupVelocityComponent() {
