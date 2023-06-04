@@ -128,7 +128,7 @@ public abstract class Monster extends Entity {
                         .getComponent(XPComponent.class)                // Gets the XPComponent of the hero
                         .ifPresent(xpc ->
                             ((XPComponent) xpc).addXP(getLootXP()));    // Adds monster's XP to hero's
-                    monsterLogger.info("You gained " + getLootXP() + " XP for killing this " + this.getClass().getName() + ".");
+                    monsterLogger.info("You gained " + getLootXP() + " XP for killing this " + this.getClass().getSimpleName() + ".");
                     HealthComponent hc =
                             (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
                 },
