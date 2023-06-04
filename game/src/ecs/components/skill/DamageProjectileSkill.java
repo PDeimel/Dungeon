@@ -2,13 +2,13 @@ package ecs.components.skill;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
+import ecs.components.ProjectileTag;
 import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
 import starter.Game;
 import tools.Point;
-import ecs.components.ProjectileTag;
 
 public abstract class DamageProjectileSkill implements ISkillFunction {
 

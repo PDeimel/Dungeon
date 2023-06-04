@@ -53,42 +53,52 @@ public class Hero extends Entity {
         pc.setSkillSlot2(secondSkill);
         // Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
-        levelUp = (long nextLevel) -> {
-            this.getComponent(HealthComponent.class)
-                .ifPresent(
-                    hc -> {
-                        // Grants +5 MaxHP per Level
-                        ((HealthComponent) hc)
-                            .setMaximalHealthpoints(
-                                ((HealthComponent) hc).getMaximalHealthpoints() + 5);
-                    });
-            this.getComponent(VelocityComponent.class)
-                .ifPresent(
-                    vc -> {
-                        // Grants a small movement buff each level
-                        ((VelocityComponent) vc)
-                            .setCurrentXVelocity(
-                                ((VelocityComponent) vc).getCurrentXVelocity() + 0.05f);
-                        ((VelocityComponent) vc)
-                            .setCurrentYVelocity(
-                                ((VelocityComponent) vc).getCurrentYVelocity() + 0.05f);
-                    });
-            heroLogger.info("You have reached Level " + nextLevel + ". Your max health and movement speed have been increased.");
-            switch ((int) nextLevel) {
-                case 5 -> {
-                    pc.setSkillSlot3(thirdSkill);
-                    heroLogger.info("The ability 'BodyAttack' has been unlocked.");
-                }
-                case 10 -> {
-                    pc.setSkillSlot4(fourthSkill);
-                    heroLogger.info("The ability 'Steroids' has been unlocked.");
-                }
-                case 20 -> {
-                    pc.setSkillSLot5(fifthSkill);
-                    heroLogger.info("The ability 'Chronobreak' has been unlocked.");
-                }
-            }
-        };
+        levelUp =
+                (long nextLevel) -> {
+                    this.getComponent(HealthComponent.class)
+                            .ifPresent(
+                                    hc -> {
+                                        // Grants +5 MaxHP per Level
+                                        ((HealthComponent) hc)
+                                                .setMaximalHealthpoints(
+                                                        ((HealthComponent) hc)
+                                                                        .getMaximalHealthpoints()
+                                                                + 5);
+                                    });
+                    this.getComponent(VelocityComponent.class)
+                            .ifPresent(
+                                    vc -> {
+                                        // Grants a small movement buff each level
+                                        ((VelocityComponent) vc)
+                                                .setCurrentXVelocity(
+                                                        ((VelocityComponent) vc)
+                                                                        .getCurrentXVelocity()
+                                                                + 0.05f);
+                                        ((VelocityComponent) vc)
+                                                .setCurrentYVelocity(
+                                                        ((VelocityComponent) vc)
+                                                                        .getCurrentYVelocity()
+                                                                + 0.05f);
+                                    });
+                    heroLogger.info(
+                            "You have reached Level "
+                                    + nextLevel
+                                    + ". Your max health and movement speed have been increased.");
+                    switch ((int) nextLevel) {
+                        case 5 -> {
+                            pc.setSkillSlot3(thirdSkill);
+                            heroLogger.info("The ability 'BodyAttack' has been unlocked.");
+                        }
+                        case 10 -> {
+                            pc.setSkillSlot4(fourthSkill);
+                            heroLogger.info("The ability 'Steroids' has been unlocked.");
+                        }
+                        case 20 -> {
+                            pc.setSkillSLot5(fifthSkill);
+                            heroLogger.info("The ability 'Chronobreak' has been unlocked.");
+                        }
+                    }
+                };
         setupXPComponent();
     }
 
@@ -116,7 +126,6 @@ public class Hero extends Entity {
         fourthSkill = new Skill(new ChronoBreakSkill(), fireballCoolDown);
 
         fifthSkill = new Skill(new SteroidsSkill(), fireballCoolDown);
-
     }
 
     private void setupHitboxComponent() {

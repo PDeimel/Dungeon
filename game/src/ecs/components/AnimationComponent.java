@@ -50,10 +50,10 @@ public class AnimationComponent extends Component {
         this.idleRight = new Animation(missingTexture, 100);
         this.currentAnimation = new Animation(missingTexture, 100);
         animCompLogger.log(
-        CustomLogLevel.ERROR,
-        "The AnimationComponent for entity '"
-                + entity.getClass().getName()
-                + "' was created with default textures!");
+                CustomLogLevel.ERROR,
+                "The AnimationComponent for entity '"
+                        + entity.getClass().getName()
+                        + "' was created with default textures!");
     }
 
     /**
@@ -63,10 +63,10 @@ public class AnimationComponent extends Component {
         if (animation.getAnimationFrames().size() > 0) {
             if (animation.getAnimationFrames().get(0).equals(missingTexture.get(0))) {
                 animCompLogger.log(
-                CustomLogLevel.ERROR,
-                "The Animation for entity '"
-                        + entity.getClass().getName()
-                        + "' was set to the default missing textures.");
+                        CustomLogLevel.ERROR,
+                        "The Animation for entity '"
+                                + entity.getClass().getName()
+                                + "' was set to the default missing textures.");
             }
         }
         this.currentAnimation = animation;

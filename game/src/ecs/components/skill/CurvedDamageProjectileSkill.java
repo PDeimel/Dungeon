@@ -2,8 +2,8 @@ package ecs.components.skill;
 
 import dslToGame.AnimationBuilder;
 import ecs.components.*;
-import ecs.components.collision.ICollide;
 import ecs.components.ProjectileTag;
+import ecs.components.collision.ICollide;
 import ecs.damage.Damage;
 import ecs.entities.Entity;
 import graphic.Animation;
@@ -37,7 +37,7 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
     /**
      * create an entity witch is used as projectile
      *
-     * The Entity receives all components that are necessary to represent a Projectile uses the
+     * <p>The Entity receives all components that are necessary to represent a Projectile uses the
      * new Constructor for ProjectileComponent to determinate if the Projectile is curved or not
      *
      * @param entity which uses the skill
@@ -64,9 +64,8 @@ public class CurvedDamageProjectileSkill implements ISkillFunction {
 
         new VelocityComponent(projectile, velocity.x, velocity.y, animation, animation);
         /**
-         * Constructor of Projectile Component receives  true parameter , Projectile turns curved(
-         * Variable used in
-         * ProjectileSystem)
+         * Constructor of Projectile Component receives true parameter , Projectile turns curved(
+         * Variable used in ProjectileSystem)
          */
         new ProjectileComponent(projectile, epc.getPosition(), targetPoint, true);
 

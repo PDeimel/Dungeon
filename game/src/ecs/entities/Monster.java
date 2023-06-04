@@ -9,7 +9,6 @@ import graphic.Animation;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
-
 import starter.Game;
 
 /**
@@ -113,8 +112,8 @@ public abstract class Monster extends Entity {
     }
 
     /**
-     * Enables the monster to die and once that happens it transfers it's loot-Xp
-     * to the hero's XPComponent.
+     * Enables the monster to die and once that happens it transfers it's loot-Xp to the hero's
+     * XPComponent.
      *
      * @param health The HP of the monster
      */
@@ -124,11 +123,19 @@ public abstract class Monster extends Entity {
                 health,
                 (Entity e) -> {
                     Game.getHero()
-                        .get()
-                        .getComponent(XPComponent.class)                // Gets the XPComponent of the hero
-                        .ifPresent(xpc ->
-                            ((XPComponent) xpc).addXP(getLootXP()));    // Adds monster's XP to hero's
-                    monsterLogger.info("You gained " + getLootXP() + " XP for killing this " + this.getClass().getName() + ".");
+                            .get()
+                            .getComponent(XPComponent.class) // Gets the XPComponent of the hero
+                            .ifPresent(
+                                    xpc ->
+                                            ((XPComponent) xpc)
+                                                    .addXP(getLootXP())); // Adds monster's XP to
+                    // hero's
+                    monsterLogger.info(
+                            "You gained "
+                                    + getLootXP()
+                                    + " XP for killing this "
+                                    + this.getClass().getName()
+                                    + ".");
                     HealthComponent hc =
                             (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
                 },
@@ -146,16 +153,18 @@ public abstract class Monster extends Entity {
     }
 
     /**
-     * Get the LootXP out of the XPComponent to avoid cramming in the onDeathFunction
-     * in setUpHealthComponent.
+     * Get the LootXP out of the XPComponent to avoid cramming in the onDeathFunction in
+     * setUpHealthComponent.
      *
      * @return The monster's lootXP
      */
     private long getLootXP() {
         AtomicLong xp = new AtomicLong();
-        this.getComponent(XPComponent.class).ifPresent(xpc -> {
-            xp.set(((XPComponent) xpc).getLootXP());
-        });
+        this.getComponent(XPComponent.class)
+                .ifPresent(
+                        xpc -> {
+                            xp.set(((XPComponent) xpc).getLootXP());
+                        });
         return xp.get();
     }
 }

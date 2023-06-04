@@ -8,8 +8,6 @@ import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
 import ecs.components.ai.transition.RangeTransition;
-import graphic.Animation;
-import java.util.List;
 
 /** A monster resembling a bat which is exceptionally fast and tries to hunt down the hero */
 public class BatMonster extends Monster {
