@@ -106,8 +106,8 @@ public class PlayableComponent extends Component {
     /**
      * @return skill on third skill slot
      */
-    public Skill getSkillSlot4() {
-        return skillSlot4;
+    public Optional<Skill> getSkillSlot4() {
+        return Optional.ofNullable( skillSlot4);
     }
     /**
      * @param skillSlot4 skill that will be on the third skill slot
@@ -118,8 +118,8 @@ public class PlayableComponent extends Component {
     /**
      * @return skill on third skill slot
      */
-    public Skill getSkillSLot5() {
-        return skillSLot5;
+    public Optional<Skill>  getSkillSLot5() {
+        return Optional.ofNullable( skillSLot5);
     }
     /**
      * @param skillSLot5 skill that will be on the third skill slot
