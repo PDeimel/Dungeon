@@ -35,7 +35,6 @@ public class Hero extends Entity {
     private Skill thirdSkill;
     private Skill fourthSkill;
     private Skill fifthSkill;
-    private int invSlots = 5;
     private final ILevelUp levelUp;
     private final Logger heroLogger;
 
@@ -86,7 +85,7 @@ public class Hero extends Entity {
                     heroLogger.info("The ability 'Steroids' has been unlocked.");
                 }
                 case 20 -> {
-                    pc.setSkillSlot5(fifthSkill);
+                    pc.setSkillSLot5(fifthSkill);
                     heroLogger.info("The ability 'Chronobreak' has been unlocked.");
                 }
             }
