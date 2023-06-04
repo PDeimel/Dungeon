@@ -114,12 +114,12 @@ public abstract class Monster extends Entity {
                 this,
                 health,
                 (Entity e) -> {
+                    Game.getHero()
+                        .get()
+                        .getComponent(XPComponent.class)
+                        .ifPresent(xpc -> ((XPComponent) xpc).addXP(this.xp));
                     HealthComponent hc =
                             (HealthComponent) e.getComponent(HealthComponent.class).orElseThrow();
-                    Game.getHero()
-                            .get()
-                            .getComponent(XPComponent.class)
-                            .ifPresent(xpc -> ((XPComponent) xpc).addXP(this.xp));
                 },
                 missingTextureAnimation,
                 missingTextureAnimation);
