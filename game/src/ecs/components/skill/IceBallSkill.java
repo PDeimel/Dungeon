@@ -15,7 +15,7 @@ public class IceBallSkill extends CurvedDamageProjectileSkill {
         super(
                 "skills/fireball/IceBall/snowflacke.png",
                 0.5f,
-                new Damage(1, DamageType.ICE, null),
+                new Damage(2, DamageType.ICE, null),
                 new Point(10, 10),
                 targetSelection,
                 10f);

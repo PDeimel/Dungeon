@@ -84,6 +84,7 @@ public class Hero extends Entity {
                             "You have reached Level "
                                     + nextLevel
                                     + ". Your max health and movement speed have been increased.");
+                    // Every major level until 20 grants a new ability
                     switch ((int) nextLevel) {
                         case 5 -> {
                             pc.setSkillSlot3(thirdSkill);
