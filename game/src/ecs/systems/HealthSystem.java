@@ -7,9 +7,8 @@ import ecs.components.stats.StatsComponent;
 import ecs.components.xp.XPComponent;
 import ecs.damage.DamageType;
 import ecs.entities.Entity;
-import java.util.stream.Stream;
-
 import ecs.entities.Hero;
+import java.util.stream.Stream;
 import starter.Game;
 
 /**
@@ -96,11 +95,11 @@ public class HealthSystem extends ECS_System {
         hsd.hc.triggerOnDeath();
         hsd.ac.setCurrentAnimation(hsd.hc.getDieAnimation());
         // TODO: Before removing the entity, check if the animation is finished (Issue #246)
-        //If the dying entity is our Hero, he will not disappear and instead play his death-animation
-        if(hsd.hc.getEntity() instanceof Hero){
+        // If the dying entity is our Hero, he will not disappear and instead play his
+        // death-animation
+        if (hsd.hc.getEntity() instanceof Hero) {
             Hero h = (Hero) hsd.hc.getEntity();
-        }
-        else Game.removeEntity(hsd.hc.getEntity());
+        } else Game.removeEntity(hsd.hc.getEntity());
         // Add XP
         hsd.e
                 .getComponent(XPComponent.class)

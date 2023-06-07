@@ -5,8 +5,9 @@ import ecs.components.HitboxComponent;
 import ecs.components.PositionComponent;
 
 /**
- * A gravestone belonging to the ghost which spawns in the same level. Once the hero as well as the ghost
- * are in proximity to the stone, the ghost will disappear and the hero will either be rewarded or punished.
+ * A gravestone belonging to the ghost which spawns in the same level. Once the hero as well as the
+ * ghost are in proximity to the stone, the ghost will disappear and the hero will either be
+ * rewarded or punished.
  */
 public class Gravestone extends NPC{
 
@@ -25,19 +26,19 @@ public class Gravestone extends NPC{
 
     private void setupHitboxComponent() {
         new HitboxComponent(
-            this,
-            (you, other, direction) -> giveReward(other),
-            (you, other, direction) -> System.out.println()
-        );
+                this,
+                (you, other, direction) -> giveReward(other),
+                (you, other, direction) -> System.out.println());
     }
 
     /**
-     * When the hero, accompanied by a ghost, gets in close range to the gravestone, the
-     * ghost activates his reward-method ONCE.
+     * When the hero, accompanied by a ghost, gets in close range to the gravestone, the ghost
+     * activates his reward-method ONCE.
+     *
      * @param hero the current playable hero
      */
     public void giveReward(Entity hero) {
-        if(hero instanceof Hero && !activated) {
+        if (hero instanceof Hero && !activated) {
             activated = true;
             ghost.graveLoot();
         }

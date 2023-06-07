@@ -5,7 +5,5 @@ import level.elements.tile.Tile;
 
 public class MonsterCollisionOut implements ICollide {
     @Override
-    public void onCollision(Entity a, Entity b, Tile.Direction from) {
-
-    }
+    public void onCollision(Entity a, Entity b, Tile.Direction from) {}
 }
