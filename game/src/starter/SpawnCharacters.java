@@ -15,6 +15,8 @@ public class SpawnCharacters implements IOnLevelLoader {
     private final int levelReached;
     private int amountOfMonsters;
     private boolean graveSpawned = false;
+
+    private boolean riddlerSpawned = false;
     public SpawnCharacters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
@@ -61,9 +63,13 @@ public class SpawnCharacters implements IOnLevelLoader {
                 graveSpawned = true;
             }
         }
-        if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
-            NPC riddler = new Riddleman();
+        if(!riddlerSpawned){
+            if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+                NPC riddler = new Riddleman();
+            }
+            riddlerSpawned = true;
         }
+
     }
 
     public void setAmountOfMonsters(int amountOfMonsters) {

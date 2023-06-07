@@ -10,6 +10,6 @@ public class Riddleman extends NPC {
         super();
         super.setupPositionComponent();
         super.setupAnimationComponent(pathToIdle, pathToIdle);
-        new InteractionComponent(this,1f,false,new RiddleInteraction(this));
+        new InteractionComponent(this,1f,false,new RiddleInteraction());
     }
 }
