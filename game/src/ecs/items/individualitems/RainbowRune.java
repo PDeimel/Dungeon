@@ -8,7 +8,7 @@ import ecs.damage.DamageType;
 import ecs.entities.Entity;
 import ecs.items.*;
 import starter.Game;
-import starter.SpawnMonsters;
+import starter.SpawnCharacters;
 
 import java.util.Random;
 import java.util.Set;
@@ -72,7 +72,7 @@ public class RainbowRune extends ItemData implements IOnUse {
             System.out.println("The Rainbow-Rune created an earthquake.");
         }
         else {
-            new SpawnMonsters(0).onLevelLoad();
+            new SpawnCharacters(0).onLevelLoad();
             System.out.println("The Rainbow-Rune spawned many monsters.");
         }
 

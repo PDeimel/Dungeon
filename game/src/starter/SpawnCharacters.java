@@ -6,7 +6,7 @@ import level.IOnLevelLoader;
 /**
  * Generates a random amount of different monsters per level, generally increasing the deeper the hero gets.
  */
-public class SpawnMonsters implements IOnLevelLoader {
+public class SpawnCharacters implements IOnLevelLoader {
 
     int EASY = 10;
     int MEDIUM = 20;
@@ -14,7 +14,7 @@ public class SpawnMonsters implements IOnLevelLoader {
     private final int levelReached;
     private int amountOfMonsters;
     private boolean graveSpawned = false;
-    public SpawnMonsters(int levelReached) {
+    public SpawnCharacters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
         spawnRiddler();

@@ -1,10 +1,8 @@
 package ecs.systems;
 
-import starter.SpawnMonsters;
+import starter.SpawnCharacters;
 import java.util.logging.Logger;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DialogSystem {
     private static final Logger logger = Logger.getLogger(DialogSystem.class.getName());
@@ -33,7 +31,7 @@ public class DialogSystem {
             }
             if (Counter == 5) {
                 logger.info("Hier für deine Mühe!!");
-                SpawnMonsters punish = new SpawnMonsters(0);
+                SpawnCharacters punish = new SpawnCharacters(0);
                 punish.setAmountOfMonsters(1);
                 punish.onLevelLoad();
             }
