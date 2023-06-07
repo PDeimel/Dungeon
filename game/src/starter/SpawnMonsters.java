@@ -17,6 +17,7 @@ public class SpawnMonsters implements IOnLevelLoader {
     public SpawnMonsters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
+        spawnRiddler();
     }
 
     /**
@@ -40,7 +41,7 @@ public class SpawnMonsters implements IOnLevelLoader {
 
     /**
      * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates a gravestone with
-     * a ghost once per level.
+     * a ghost once per level. Additionally, a Riddleman can also be spawned.
      */
     @Override
     public void onLevelLoad() {
@@ -53,9 +54,6 @@ public class SpawnMonsters implements IOnLevelLoader {
         for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new BatMonster();
         }
-        for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
-            Monster m = new Riddleman();
-        }
         if(!graveSpawned) {
             // In about 20% of new levels a ghost and his gravestone spawn
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
@@ -67,8 +65,14 @@ public class SpawnMonsters implements IOnLevelLoader {
                 graveSpawned = true;
             }
         }
+        if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+            NPC riddler = new Riddleman();
+        }
     }
 
+    private void spawnRiddler() {
+
+    }
     public void setAmountOfMonsters(int amountOfMonsters) {
         this.amountOfMonsters = amountOfMonsters;
     }
