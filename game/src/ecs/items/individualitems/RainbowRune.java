@@ -10,7 +10,7 @@ import ecs.items.*;
 import java.util.Random;
 import java.util.Set;
 import starter.Game;
-import starter.SpawnMonsters;
+import starter.SpawnCharacters;
 
 /** An individual item that grants on of three different effect on use */
 public class RainbowRune extends ItemData implements IOnUse {
@@ -64,9 +64,9 @@ public class RainbowRune extends ItemData implements IOnUse {
                                 });
             }
             System.out.println("The Rainbow-Rune created an earthquake.");
-        } else {
-            new SpawnMonsters(0).onLevelLoad();
-            System.out.println("The Rainbow-Rune spawned many monsters.");
+        }
+        else {
+            new SpawnCharacters(0).onLevelLoad();
         }
 
         e.getComponent(InventoryComponent.class)

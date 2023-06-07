@@ -9,35 +9,22 @@ import ecs.components.PositionComponent;
  * ghost are in proximity to the stone, the ghost will disappear and the hero will either be
  * rewarded or punished.
  */
-public class Gravestone extends Monster {
+public class Gravestone extends NPC{
 
+    private final String pathToIdleLeft = "character/monster/gravestone";
+    private final String pathToIdleRight = "character/monster/gravestone";
     private boolean activated = false;
     private final Ghost ghost;
 
     public Gravestone(Ghost ghost) {
         super();
-        super.setPathToIdleLeft("character/monster/gravestone");
-        super.setPathToIdleRight("character/monster/gravestone");
-        super.setPathToRunLeft("character/monster/gravestone");
-        super.setPathToRunRight("character/monster/gravestone");
-        super.setIdleLeft();
-        super.setIdleRight();
-        super.setDmg(0);
-        setUpAnimationComponent();
-        setUpPositionComponent();
-        setUpHitboxComponent();
+        super.setupAnimationComponent(pathToIdleLeft, pathToIdleRight);
+        super.setupPositionComponent();
+        setupHitboxComponent();
         this.ghost = ghost;
     }
 
-    private void setUpAnimationComponent() {
-        new AnimationComponent(this, super.getIdleLeft(), super.getIdleRight());
-    }
-
-    private void setUpPositionComponent() {
-        new PositionComponent(this);
-    }
-
-    private void setUpHitboxComponent() {
+    private void setupHitboxComponent() {
         new HitboxComponent(
                 this,
                 (you, other, direction) -> giveReward(other),

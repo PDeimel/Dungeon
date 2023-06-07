@@ -7,7 +7,7 @@ import level.IOnLevelLoader;
  * Generates a random amount of different monsters per level, generally increasing the deeper the
  * hero gets.
  */
-public class SpawnMonsters implements IOnLevelLoader {
+public class SpawnCharacters implements IOnLevelLoader {
 
     int EASY = 10;
     int MEDIUM = 20;
@@ -16,7 +16,8 @@ public class SpawnMonsters implements IOnLevelLoader {
     private int amountOfMonsters;
     private boolean graveSpawned = false;
 
-    public SpawnMonsters(int levelReached) {
+    private boolean riddlerSpawned = false;
+    public SpawnCharacters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
     }
@@ -37,8 +38,8 @@ public class SpawnMonsters implements IOnLevelLoader {
     }
 
     /**
-     * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates
-     * a gravestone with a ghost once per level.
+     * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates a gravestone with
+     * a ghost once per level. Additionally, a Riddleman can also be spawned.
      */
     @Override
     public void onLevelLoad() {
@@ -54,7 +55,7 @@ public class SpawnMonsters implements IOnLevelLoader {
         if (!graveSpawned) {
             // In about 20% of new levels a ghost and his gravestone spawn
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
-                Monster ghost = new Gravestone(new Ghost((Hero) Game.getHero().orElseThrow()));
+                NPC ghost = new Gravestone(new Ghost((Hero) Game.getHero().orElseThrow()));
 
                 /*  When there already is a gravestone in the level, the punishment of the
                 ghost in form of spawning monsters shall not create another stone with
@@ -62,6 +63,13 @@ public class SpawnMonsters implements IOnLevelLoader {
                 graveSpawned = true;
             }
         }
+        if(!riddlerSpawned){
+            if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+                NPC riddler = new Riddleman();
+            }
+            riddlerSpawned = true;
+        }
+
     }
 
     public void setAmountOfMonsters(int amountOfMonsters) {

@@ -104,25 +104,25 @@ public class PlayableComponent extends Component {
     }
 
     /**
-     * @return skill on third skill slot
+     * @return skill on fourth skill slot
      */
     public Optional<Skill> getSkillSlot4() {
         return Optional.ofNullable(skillSlot4);
     }
     /**
-     * @param skillSlot4 skill that will be on the third skill slot
+     * @param skillSlot4 skill that will be on the fourth skill slot
      */
     public void setSkillSlot4(Skill skillSlot4) {
         this.skillSlot4 = skillSlot4;
     }
     /**
-     * @return skill on third skill slot
+     * @return skill on fifth skill slot
      */
     public Optional<Skill> getSkillSLot5() {
         return Optional.ofNullable(skillSLot5);
     }
     /**
-     * @param skillSLot5 skill that will be on the third skill slot
+     * @param skillSLot5 skill that will be on the fifth skill slot
      */
     public void setSkillSLot5(Skill skillSLot5) {
         this.skillSLot5 = skillSLot5;
