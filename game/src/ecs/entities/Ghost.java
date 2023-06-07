@@ -1,14 +1,12 @@
 package ecs.entities;
 
-import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.CollideAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.PassiveTransition;
-import graphic.Animation;
 import starter.Game;
-import starter.SpawnMonsters;
+import starter.SpawnCharacters;
 import java.util.Optional;
 import java.util.Set;
 
@@ -49,7 +47,7 @@ public class Ghost extends NPC{
             }
             else {
                 System.out.println("The ghost is angry at the hero for making him leave his realm and punishes him!");
-                SpawnMonsters punish = new SpawnMonsters(0);
+                SpawnCharacters punish = new SpawnCharacters(0);
                 punish.setAmountOfMonsters(1);
                 punish.onLevelLoad();
             }

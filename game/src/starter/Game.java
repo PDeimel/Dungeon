@@ -142,7 +142,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-        SpawnMonsters spawnMonsters = new SpawnMonsters(levelReached);
+        SpawnCharacters spawnCharacters = new SpawnCharacters(levelReached);
         SpawnLoot spawnLoot = new SpawnLoot();
         Trap t = new Trap();
     }

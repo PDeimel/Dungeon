@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 public abstract class NPC extends Entity{
 
     private final Logger npcLogger = Logger.getLogger(this.getClass().getSimpleName());
+
     public void setupAnimationComponent(String pathToIdleLeft, String pathToIdleRight) {
         Animation idleLeft = AnimationBuilder.buildAnimation(pathToIdleLeft);
         Animation idleRight = AnimationBuilder.buildAnimation(pathToIdleRight);
