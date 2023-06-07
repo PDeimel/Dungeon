@@ -14,13 +14,12 @@ import starter.Game;
 public class ChronoBreakSkill implements ISkillFunction {
 
     private final int duration = 5;
-    private Logger chronoBreakLogger = Logger.getLogger(this.getClass().getName());
+    private final Logger chronoBreakLogger = Logger.getLogger(this.getClass().getName());
 
     /**
-     * Stop the Mosters and change the animation
-     *
-     * The Monsters lost the velocity in y and x . They become a new Animation when they are stopped.
-     * After a determinate time the Velocity and Animation are set to standard
+     * Stop the Monsters and change their animation.
+     * The Monsters lose the velocity in y and x. They receive a new Animation when they are stopped.
+     * After a determined time the Velocity and Animation are reset to standard
      *
      * @param entity which uses the skill
      */

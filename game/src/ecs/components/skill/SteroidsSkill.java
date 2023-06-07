@@ -13,14 +13,13 @@ import java.util.logging.Logger;
 public class SteroidsSkill implements ISkillFunction {
 
     private final int duration = 5;
-    private Logger steroidsSkillLogger = Logger.getLogger(this.getClass().getName());
+    private final Logger steroidsSkillLogger = Logger.getLogger(this.getClass().getName());
 
     /**
-     * Velocity of Hero turns faster, Animation is changed und Hero lost 10 health points
-     *
-     * the Velocity of hero turns 0.1f faster when the Skill ist activated. At the same time he lost
-     * 10 health points when Steroids are used. After a determinate time the animation and velocity of hero
-     * are set to standard
+     * Velocity of hero turns faster, animation is changed und hero loses 10 health points.
+     * The velocity of hero turns 0.1f faster while the Skill is active.
+     * After a determined time the animation and velocity of the hero
+     * are reset to standard.
      *
      * @param entity which uses the skill
      */
@@ -51,7 +50,7 @@ public class SteroidsSkill implements ISkillFunction {
                     (AnimationComponent)
                             entity.getComponent(AnimationComponent.class).orElseThrow();
             new AnimationComponent(entity, newAnimationL, newAnimationR);
-
+            // Deactivates the ability after a set amount of time via a Timer.
             Timer time = new Timer();
             time.schedule(
                     new TimerTask() {
