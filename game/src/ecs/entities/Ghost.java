@@ -17,26 +17,21 @@ import java.util.Set;
  * able to move around freely or disappear completely from the level. Once he is in close
  * reach of his gravestone, he will leave the level behind.
  */
-public class Ghost extends Monster{
+public class Ghost extends NPC{
 
+    private final String pathToIdleLeft = "character/monster/ghost/idleAndRunLeft";
+    private final String pathToIdleRight = "character/monster/ghost/idleAndRunRight";
+    private final float XSPEED = 0.25f;
+    private final float YSPEED = 0.25f;
     private boolean activeThisLevel = false;
     private final Hero hero;
     public Ghost(Hero hero) {
         super();
-        super.setxSpeed(0.25f);
-        super.setySpeed(0.25f);
-        super.setPathToIdleLeft("character/monster/ghost/idleAndRunLeft");
-        super.setPathToIdleRight("character/monster/ghost/idleAndRunRight");
-        super.setPathToRunLeft("character/monster/ghost/idleAndRunLeft");
-        super.setPathToRunRight("character/monster/ghost/idleAndRunRight");
         this.hero = hero;
-        super.setIdleLeft();
-        super.setIdleRight();
-        super.setDmg(0);
-        setUpPositionComponent();
-        setUpAnimationComponent();
-        setUpVelocityComponent();
-        setUpHitboxComponent();
+        super.setupPositionComponent();
+        super.setupAnimationComponent(pathToIdleLeft, pathToIdleRight);
+        super.setupVelocityComponent(XSPEED, YSPEED, pathToIdleLeft, pathToIdleRight);
+        setupHitboxComponent();
         getIdle();
     }
 
@@ -82,27 +77,12 @@ public class Ghost extends Monster{
         }
     }
 
-    private void setUpAnimationComponent() {
-        Animation idleRight = AnimationBuilder.buildAnimation(getPathToIdleRight());
-        Animation idleLeft = AnimationBuilder.buildAnimation(getPathToIdleLeft());
-        new AnimationComponent(this, idleLeft, idleRight);
-    }
 
-    private void setUpVelocityComponent() {
-        Animation runRight = AnimationBuilder.buildAnimation(getPathToRunRight());
-        Animation runLeft = AnimationBuilder.buildAnimation(getPathToRunLeft());
-        new VelocityComponent(this, getxSpeed(), getySpeed(), runLeft, runRight);
-    }
-
-    private void setUpHitboxComponent() {
+    private void setupHitboxComponent() {
         new HitboxComponent(
             this,
-            (player, ghost, direction) -> System.out.println("Collides with ghost"),
-            (player, ghost, direction) -> System.out.println("Leaves ghost collision"));
-    }
-
-    private void setUpPositionComponent() {
-        new PositionComponent(this);
+            (player, ghost, direction) -> {},
+            (player, ghost, direction) -> {});
     }
 
     /**
