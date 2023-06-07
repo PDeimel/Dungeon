@@ -53,6 +53,9 @@ public class SpawnMonsters implements IOnLevelLoader {
         for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
             Monster m = new BatMonster();
         }
+        for(int i = 0; i < (double) (amountOfMonsters / 3); i++) {
+            Monster m = new Rätzelmeister();
+        }
         if(!graveSpawned) {
             // In about 20% of new levels a ghost and his gravestone spawn
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
