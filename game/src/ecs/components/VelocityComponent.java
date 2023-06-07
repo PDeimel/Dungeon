@@ -141,4 +141,22 @@ public class VelocityComponent extends Component {
     public Animation getMoveLeftAnimation() {
         return moveLeftAnimation;
     }
+
+    /**
+     * Used outside the Class to change the animation when necessary
+     *
+     * @param moveRightAnimation Animation used when player moves to the side
+     */
+    public void setMoveRightAnimation(Animation moveRightAnimation) {
+        this.moveRightAnimation = moveRightAnimation;
+    }
+
+    /**
+     * Used outside the Class to change the animation when necessary
+     *
+     * @param moveLeftAnimation Animation used when player moves to the side
+     */
+    public void setMoveLeftAnimation(Animation moveLeftAnimation) {
+        this.moveLeftAnimation = moveLeftAnimation;
+    }
 }
