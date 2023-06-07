@@ -8,7 +8,7 @@ import graphic.Animation;
 
 import java.util.logging.Logger;
 
-/** An abstract superclass to classify certain entities as "Not-Playable-Characters"*/
+/** An abstract superclass to classify certain entities as "Not-Playable-Characters" */
 public abstract class NPC extends Entity{
 
     private final Logger npcLogger = Logger.getLogger(this.getClass().getSimpleName());

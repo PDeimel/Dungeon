@@ -17,8 +17,8 @@ import java.util.Scanner;
 
 public class RiddleInteraction implements IInteraction {
 
-    private ArrayList<Questions> myQuestions= new ArrayList<>();
-    private Logger riddlemanLogger = Logger.getLogger(this.getClass().getName());
+    private final ArrayList<Questions> myQuestions= new ArrayList<>();
+    private final Logger riddlemanLogger = Logger.getLogger(this.getClass().getName());
 
 
     public RiddleInteraction(){
@@ -32,14 +32,13 @@ public class RiddleInteraction implements IInteraction {
         myQuestions.add(new Questions("What is the name of the Egyptian god of the sun?","ra"));
         myQuestions.add(new Questions("What is the size of an int in Java?","4"));
         myQuestions.add(new Questions("What is the base class of all classes in Java?","object"));
-
     }
 
     /**
-     * Interacts with the hero by asking a riddle.
-     *
-     * ask Hero a random question from a predetermined lis. Once the hero answers correct receive more Xp points
-     * when the answer ist not correct, try to more times. If the answer is still false, more monsters are added in the Game
+     * Interacts with the hero by asking him to solve a riddle.
+     * The hero is presented with a question chosen randomly from a list. With the correct solving of
+     * the riddle the hero receives a bit of XP. If he answers wrongly, he is asked to answer again.
+     * If the player doesn't succeed after the third trie he will be punished in the form of monsters.
      *
      * @param entity Riddleman
      */
@@ -62,8 +61,8 @@ public class RiddleInteraction implements IInteraction {
 
             if (m.matches()) {
                 XPComponent aComponent = (XPComponent) Game.getHero().get().getComponent(XPComponent.class).orElseThrow();
-                aComponent.addXP(10);
-                riddlemanLogger.info("XP was set in 10 extra points");
+                aComponent.addXP(50);
+                riddlemanLogger.info("XP was increased by 50");
                 Game.removeEntity(entity);
                 break;
             } else {
@@ -73,15 +72,14 @@ public class RiddleInteraction implements IInteraction {
                 }
                 riddlemanLogger.info("tried to find answer one more time ");
 
-                if(attemptCounter >= 3) {
+                if(attemptCounter == 3) {
                     SpawnCharacters punish = new SpawnCharacters(0);
                     punish.setAmountOfMonsters(1);
                     punish.onLevelLoad();
-                    riddlemanLogger.info("more Monsters were add to game");
+                    riddlemanLogger.info("Monsters were spawned as a punishment");
                     Game.removeEntity(entity);
                 }
             }
         }
-
     }
 }

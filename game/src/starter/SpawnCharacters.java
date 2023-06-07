@@ -15,8 +15,8 @@ public class SpawnCharacters implements IOnLevelLoader {
     private final int levelReached;
     private int amountOfMonsters;
     private boolean graveSpawned = false;
-
     private boolean riddlerSpawned = false;
+
     public SpawnCharacters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
@@ -63,6 +63,9 @@ public class SpawnCharacters implements IOnLevelLoader {
                 graveSpawned = true;
             }
         }
+        /*  The riddler is able to spawn new monsters, so in order to prevent him from duping
+            himself a checkup is inserted before he is created.
+         */
         if(!riddlerSpawned){
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
                 NPC riddler = new Riddleman();

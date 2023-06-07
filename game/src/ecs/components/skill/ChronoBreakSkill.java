@@ -17,7 +17,7 @@ public class ChronoBreakSkill implements ISkillFunction {
     private final Logger chronoBreakLogger = Logger.getLogger(this.getClass().getName());
 
     /**
-     * Stop the Monsters and change their animation.
+     * Stops the Monsters and changes their animation.
      * The Monsters lose the velocity in y and x. They receive a new Animation when they are stopped.
      * After a determined time the Velocity and Animation are reset to standard
      *
@@ -28,139 +28,61 @@ public class ChronoBreakSkill implements ISkillFunction {
     public void execute(Entity entity) {
         Set<Entity> myEntities = Game.getEntities();
         for (Entity a : myEntities) {
-            if (a instanceof BatMonster) {
-                modifyTheBat(a);
-            } else if (a instanceof PigMonster) {
-                modifyThePig(a);
-            } else if (a instanceof WormMonster) {
-                modifyTheWorm(a);
-            }
+            if (a instanceof Monster)
+                modifyMonster((Monster) a);
         }
     }
 
     /**
-     * set the velocity and animation of bat. Calculate the time to set the animation
-     * and velocity to standard
+     * Is activated through the iteration in the execute-method and changes the monsters
+     * specific Velocity and Animation into a frozen Flake state which is reset by a
+     * timer after a specific period of time.
      *
-     * @param bat used to change the characteristics of Bat
+     * @param monster The current monster of the loop
      */
-
-    private void modifyTheBat(Entity bat) {
-        BatMonster b = (BatMonster) bat;
+    private void modifyMonster(Monster monster) {
+        String monsterName = monster.getClass().getSimpleName();
         VelocityComponent vc =
-                (VelocityComponent) b.getComponent(VelocityComponent.class).orElseThrow();
+            (VelocityComponent) monster.getComponent(VelocityComponent.class).orElseThrow();
         vc.setXVelocity(0f);
         vc.setYVelocity(0f);
-        chronoBreakLogger.info("Velocity of Bat is now null because ChronoBreak was used");
-
-        AnimationComponent ac =
-                (AnimationComponent) b.getComponent(AnimationComponent.class).orElseThrow();
+        chronoBreakLogger.info("Velocity of " + monsterName + " is now null because ChronoBreak was used");
         Animation newAnimation =
-                AnimationBuilder.buildAnimation("skills/fireball/IceBall/snowflacke.png");
-        chronoBreakLogger.info("Animation of Bat is now a snowflake because ChronoBreak was used");
-
-        new AnimationComponent(b, newAnimation);
+            AnimationBuilder.buildAnimation("skills/fireball/IceBall/snowflacke.png");
+        new AnimationComponent(monster, newAnimation);
+        chronoBreakLogger.info("Animation of " + monsterName + " is now a snowflake because ChronoBreak was used");
         Timer time = new Timer();
         time.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        vc.setXVelocity(0.3f);
-                        vc.setYVelocity(0.3f);
-                        chronoBreakLogger.info("Velocity of Bat turned to the normal velocity");
-
+            new TimerTask() {
+                @Override
+                public void run() {
+                    chronoBreakLogger.info("Velocity of " + monsterName + " returned to the normal velocity");
+                    if(monster.getClass() == WormMonster.class) {
                         new AnimationComponent(
-                                bat,
-                                AnimationBuilder.buildAnimation(
-                                        "character/monster/bat/idleAndRunLeft"),
-                                AnimationBuilder.buildAnimation(
-                                        "character/monster/bat/idleAndRunRight"));
-                        chronoBreakLogger.info("Animation of Bat turned to the normal animation");
+                            monster,
+                            AnimationBuilder.buildAnimation("character/monster/worm/idleLeft"),
+                            AnimationBuilder.buildAnimation("character/monster/worm/idleRight"));
+                        vc.setXVelocity(0.05f);
+                        vc.setYVelocity(0.1f);
                     }
-                },
-                duration * 1000);
-    }
-
-    /**
-     * set the velocity and animation of Pig. Calculate the time to set the animation
-     * and velocity to standard
-     *
-     * @param pig used to change the characteristics of pig
-     */
-
-    private void modifyThePig(Entity pig) {
-        PigMonster b = (PigMonster) pig;
-        VelocityComponent vc =
-                (VelocityComponent) b.getComponent(VelocityComponent.class).orElseThrow();
-        vc.setXVelocity(0f);
-        vc.setYVelocity(0f);
-        chronoBreakLogger.info("Velocity of Pig is now null because ChronoBreak was used");
-
-        AnimationComponent ac =
-                (AnimationComponent) b.getComponent(AnimationComponent.class).orElseThrow();
-        Animation newAnimation =
-                AnimationBuilder.buildAnimation("skills/fireball/IceBall/snowflacke.png");
-        new AnimationComponent(b, newAnimation);
-        chronoBreakLogger.info("Animation of Pig is now a snowflake because ChronoBreak was used");
-
-        Timer time = new Timer();
-        time.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        vc.setXVelocity(0.3f);
-                        vc.setYVelocity(0.3f);
-                        chronoBreakLogger.info("Velocity of Pig turned to the normal velocity");
-
+                    else if(monster.getClass() == BatMonster.class) {
                         new AnimationComponent(
-                                pig,
-                                AnimationBuilder.buildAnimation("character/monster/pig/idleLeft"),
-                                AnimationBuilder.buildAnimation("character/monster/pig/idleRight"));
-                        chronoBreakLogger.info("Animation of Pig turned to the normal animation");
+                            monster,
+                            AnimationBuilder.buildAnimation("character/monster/bat/idleAndRunLeft"),
+                            AnimationBuilder.buildAnimation("character/monster/bat/idleAndRunRight"));
+                        vc.setXVelocity(0.2f);
+                        vc.setYVelocity(0.2f);
                     }
-                },
-                duration * 1000);
-    }
-
-
-    /**
-     * set the velocity and animation of Worm. Calculate the time to set the animation
-     * and velocity to standard
-     * @param worm used to change the characteristics of Worm
-     */
-    private void modifyTheWorm(Entity worm) {
-        WormMonster b = (WormMonster) worm;
-        VelocityComponent vc =
-                (VelocityComponent) b.getComponent(VelocityComponent.class).orElseThrow();
-        vc.setXVelocity(0f);
-        vc.setYVelocity(0f);
-        chronoBreakLogger.info("Velocity of Worm is now null because ChronoBreak was used");
-
-        AnimationComponent ac =
-                (AnimationComponent) b.getComponent(AnimationComponent.class).orElseThrow();
-
-        Animation newAnimation =
-                AnimationBuilder.buildAnimation("skills/fireball/IceBall/snowflacke.png");
-        new AnimationComponent(b, newAnimation);
-        chronoBreakLogger.info("Animation of Worm is now a snowflake because ChronoBreak was used");
-
-        Timer time = new Timer();
-        time.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        vc.setXVelocity(0.3f);
-                        vc.setYVelocity(0.3f);
-                        chronoBreakLogger.info("Velocity of Worm turned to the normal velocity");
-
+                    else if(monster.getClass() == PigMonster.class) {
                         new AnimationComponent(
-                                worm,
-                                AnimationBuilder.buildAnimation("character/monster/worm/idleLeft"),
-                                AnimationBuilder.buildAnimation(
-                                        "character/monster/worm/idleRight"));
-                        chronoBreakLogger.info("Animation of Worm turned to the normal Animation");
+                            monster,
+                            AnimationBuilder.buildAnimation("character/monster/pig/idleLeft"),
+                            AnimationBuilder.buildAnimation("character/monster/pig/idleRight"));
+                        vc.setXVelocity(0.15f);
                     }
-                },
-                duration * 1000);
+                    chronoBreakLogger.info("Animation of " + monsterName + " returned to the normal Animation");
+                }
+            },
+            duration * 1000);
     }
 }
