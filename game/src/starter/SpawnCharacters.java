@@ -17,7 +17,6 @@ public class SpawnCharacters implements IOnLevelLoader {
     public SpawnCharacters(int levelReached) {
         this.levelReached = levelReached;
         spawnAmount();
-        spawnRiddler();
     }
 
     /**
@@ -70,9 +69,6 @@ public class SpawnCharacters implements IOnLevelLoader {
         }
     }
 
-    private void spawnRiddler() {
-
-    }
     public void setAmountOfMonsters(int amountOfMonsters) {
         this.amountOfMonsters = amountOfMonsters;
     }
