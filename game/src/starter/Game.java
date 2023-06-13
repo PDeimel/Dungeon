@@ -142,7 +142,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         currentLevel = levelAPI.getCurrentLevel();
         entities.clear();
         getHero().ifPresent(this::placeOnLevelStart);
-        SpawnMonsters spawnMonsters = new SpawnMonsters(levelReached);
+        SpawnCharacters spawnCharacters = new SpawnCharacters(levelReached);
         SpawnLoot spawnLoot = new SpawnLoot();
         Trap t = new Trap();
     }
@@ -229,38 +229,44 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         if (inventoryMenu != null) {
             if (paused) {
                 /*  When the inventory-button is pressed while the game is running, all collected items in the hero's
-                    will be listed and the player has the option if and what items to use via the console. */
+                will be listed and the player has the option if and what items to use via the console. */
                 inventoryMenu.showMenu();
-                getHero().get().getComponent(InventoryComponent.class)
-                    .ifPresent(ic -> {
-                        if( ((InventoryComponent) ic).filledSlots() == 0) {
-                            System.out.println("Inventory is empty");
-                        }
-                        else {
-                            Scanner sc = new Scanner(System.in);
-                            List<ItemData> items = ((InventoryComponent) ic).getItems();
-                            for (ItemData item : items) {
-                                System.out.println(item.getItemName() + ": " + item.getDescription());
-                            }
-                            System.out.println("Use item? y for yes, any other button for no");
-                            String input = sc.next();
-                            if(input.equalsIgnoreCase("y")) {
-                                System.out.println("Which item shall be used?");
-                                for(int i = 0; i < items.size(); i++) {
-                                    System.out.println(i + ": " + items.get(i).getItemName());
-                                }
-                                input = sc.next();
-                                try {
-                                    int itemNumber = Integer.parseInt(input);
-                                    items.get(itemNumber).triggerUse(getHero().get());
-                                } catch(Exception e) {
-                                    System.out.println("Item does not exist");
-                                }
-                            }
-                        }
-                    });
-            }
-            else inventoryMenu.hideMenu();
+                getHero()
+                        .get()
+                        .getComponent(InventoryComponent.class)
+                        .ifPresent(
+                                ic -> {
+                                    if (((InventoryComponent) ic).filledSlots() == 0) {
+                                        System.out.println("Inventory is empty");
+                                    } else {
+                                        Scanner sc = new Scanner(System.in);
+                                        List<ItemData> items = ((InventoryComponent) ic).getItems();
+                                        for (ItemData item : items) {
+                                            System.out.println(
+                                                    item.getItemName()
+                                                            + ": "
+                                                            + item.getDescription());
+                                        }
+                                        System.out.println(
+                                                "Use item? y for yes, any other button for no");
+                                        String input = sc.next();
+                                        if (input.equalsIgnoreCase("y")) {
+                                            System.out.println("Which item shall be used?");
+                                            for (int i = 0; i < items.size(); i++) {
+                                                System.out.println(
+                                                        i + ": " + items.get(i).getItemName());
+                                            }
+                                            input = sc.next();
+                                            try {
+                                                int itemNumber = Integer.parseInt(input);
+                                                items.get(itemNumber).triggerUse(getHero().get());
+                                            } catch (Exception e) {
+                                                System.out.println("Item does not exist");
+                                            }
+                                        }
+                                    }
+                                });
+            } else inventoryMenu.hideMenu();
         }
     }
 
@@ -352,6 +358,8 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
     public static void resetLevelReached() {
         levelReached = 0;
     }
-    public static int getLevelReached() {return levelReached;}
 
+    public static int getLevelReached() {
+        return levelReached;
+    }
 }

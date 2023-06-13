@@ -10,23 +10,25 @@ import tools.Point;
 
 public class InventoryMenu<T extends Actor> extends ScreenController<T> {
 
-    public InventoryMenu() { this(new SpriteBatch());}
+    public InventoryMenu() {
+        this(new SpriteBatch());
+    }
 
     public InventoryMenu(SpriteBatch batch) {
         super(batch);
         ScreenText screenText =
-            new ScreenText(
-                "Inventory",
-                new Point(0, 0),
-                3,
-                new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
-                    .setFontcolor(Color.BLUE)
-                    .build());
+                new ScreenText(
+                        "Inventory",
+                        new Point(0, 0),
+                        3,
+                        new LabelStyleBuilder(FontBuilder.DEFAULT_FONT)
+                                .setFontcolor(Color.BLUE)
+                                .build());
         screenText.setFontScale(3);
         screenText.setPosition(
-            (Constants.WINDOW_WIDTH) / 2f - screenText.getWidth(),
-            (screenText.getHeight()),
-            Align.center | Align.bottom);
+                (Constants.WINDOW_WIDTH) / 2f - screenText.getWidth(),
+                (screenText.getHeight()),
+                Align.center | Align.bottom);
         add((T) screenText);
         hideMenu();
     }
@@ -40,5 +42,4 @@ public class InventoryMenu<T extends Actor> extends ScreenController<T> {
     public void hideMenu() {
         this.forEach((Actor s) -> s.setVisible(false));
     }
-
 }
