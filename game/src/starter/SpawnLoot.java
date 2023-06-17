@@ -18,15 +18,8 @@ import level.IOnLevelLoader;
 public class SpawnLoot implements IOnLevelLoader {
     Entity newItem = new Entity();
 
-    List<ItemData> chestItems = new ArrayList<>();
-    Chest chest;
-
     public SpawnLoot() {
         newItem = WorldItemBuilder.buildWorldItem(new ItemDataGenerator().generateItemData());
-        chestItems.add(new RainbowRune());
-        chestItems.add(new Cake());
-        // chest = new Chest(chestItems,
-        // Game.currentLevel.getRandomFloorTile().getCoordinateAsPoint());
         onLevelLoad();
     }
 
@@ -35,7 +28,7 @@ public class SpawnLoot implements IOnLevelLoader {
     public void onLevelLoad() {
         if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
             Game.addEntity(newItem);
-            // Game.addEntity(chest);
+            Game.addEntity(Chest.createNewChest());
         }
     }
 }

@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import level.tools.LevelElement;
 import starter.Game;
+import starter.LockPickingGame;
 import tools.Point;
 
 public class Chest extends Entity {
@@ -51,15 +52,20 @@ public class Chest extends Entity {
         new PositionComponent(this, position);
         InventoryComponent ic = new InventoryComponent(this, itemData.size());
         itemData.forEach(ic::addItem);
-        new InteractionComponent(this, defaultInteractionRadius, false, this::dropItems);
+        new InteractionComponent(this, defaultInteractionRadius, false, this::openChest);
         AnimationComponent ac =
                 new AnimationComponent(
                         this,
                         new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
                         new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
     }
+    private void openChest(Entity entity) {
+        Game.togglePause();
+        LockPickingGame.playLockPickingGameAndWait(this);
+        Game.togglePause();
+    }
 
-    private void dropItems(Entity entity) {
+    public void dropItems(Entity entity) {
         InventoryComponent inventoryComponent =
                 entity.getComponent(InventoryComponent.class)
                         .map(InventoryComponent.class::cast)

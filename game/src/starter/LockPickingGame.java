@@ -1,5 +1,7 @@
 package starter;
 
+import ecs.entities.Chest;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,6 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/** Creates a minigame in which the player has to activate a set of button in the right order,
+ *  randomized and with a time limit of 5 seconds each time.
+ */
 public class LockPickingGame extends JFrame {
     private final int FRAME_WIDTH = 400;
     private final int FRAME_HEIGHT = 300;
@@ -30,6 +35,7 @@ public class LockPickingGame extends JFrame {
     private int selectedPin = -1;
     private Timer timer;
     private int timeRemaining;
+    private Chest chest;
 
     private class LockPanel extends JPanel {
 
@@ -92,13 +98,11 @@ public class LockPickingGame extends JFrame {
                     if (!Objects.equals(playerSequence.get(i), CORRECT_SEQUENCE.get(i))) {
                         resetGame();
                         onPuzzleSolved(false);
-                        System.exit(0);
                         return;
                     }
                 }
                 if (playerSequence.equals(CORRECT_SEQUENCE)) {
                     onPuzzleSolved(true);
-                    System.exit(0);
                 }
             }
         }
@@ -127,20 +131,26 @@ public class LockPickingGame extends JFrame {
         }
     }
 
+    /**
+     * Is activated once the Lockpick has finished and either opens the chest or informs
+     * the player that he failed to solve the minigame.
+     *
+     * @param solved Result of the SequenceCheck
+     */
     private void onPuzzleSolved(boolean solved) {
         if (solved) {
-            System.out.println("Klappt");
+            LockPickingGame.super.dispose();
+            chest.dropItems(chest);
         } else {
-            System.out.println("Klappt auch");
+            LockPickingGame.super.dispose();
         }
-
         synchronized (LockPickingGame.this) {
             LockPickingGame.this.notify();
         }
     }
 
     private void startTimer() {
-        timeRemaining = 5; // 5 Sekunden
+        timeRemaining = 5;
         timer =
             new Timer(
                 1000,
@@ -151,27 +161,26 @@ public class LockPickingGame extends JFrame {
                             LockPickingGame.this.notify();
                         }
                         onPuzzleSolved(false);
-                        System.exit(0);
                     }
                     repaint();
                 });
         timer.start();
     }
 
-    public LockPickingGame() {
+    /**
+     * Creates a new lockpicking-minigame with a randomized order each time
+     */
+    public LockPickingGame(Chest chest) {
+        this.chest = chest;
         setTitle("Lockpicking Minigame");
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
         LockPanel lockPanel = new LockPanel();
         add(lockPanel);
-
         generateRandomSequence();
-
         playerSequence = new ArrayList<>();
         pinsStatus = new boolean[PIN_COUNT];
-
         lockPanel.addMouseListener(
             new MouseAdapter() {
                 @Override
@@ -198,9 +207,11 @@ public class LockPickingGame extends JFrame {
         CORRECT_SEQUENCE = sequence;
     }
 
-    public static void playLockPickingGameAndWait() {
-        LockPickingGame game = new LockPickingGame();
+    /**
+     * Used to activate the lockpicking-game from other classes, mainly the chest
+     */
+    public static void playLockPickingGameAndWait(Chest chest) {
+        LockPickingGame game = new LockPickingGame(chest);
         game.startTimer();
     }
 }
-
