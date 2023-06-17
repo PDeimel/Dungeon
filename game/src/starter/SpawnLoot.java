@@ -1,14 +1,8 @@
 package starter;
 
 import ecs.entities.Chest;
-import ecs.entities.Entity;
-import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
 import ecs.items.WorldItemBuilder;
-import ecs.items.individualitems.Cake;
-import ecs.items.individualitems.RainbowRune;
-import java.util.ArrayList;
-import java.util.List;
 import level.IOnLevelLoader;
 
 /**
@@ -25,7 +19,8 @@ public class SpawnLoot implements IOnLevelLoader {
     @Override
     public void onLevelLoad() {
         if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
-            Game.addEntity(WorldItemBuilder.buildWorldItem(new ItemDataGenerator().generateItemData()));
+            Game.addEntity(
+                    WorldItemBuilder.buildWorldItem(new ItemDataGenerator().generateItemData()));
             Game.addEntity(Chest.createNewChest());
         }
     }

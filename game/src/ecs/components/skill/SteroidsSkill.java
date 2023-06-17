@@ -16,14 +16,12 @@ public class SteroidsSkill implements ISkillFunction {
     private final Logger steroidsSkillLogger = Logger.getLogger(this.getClass().getName());
 
     /**
-     * Velocity of hero turns faster, animation is changed und hero loses 10 health points.
-     * The velocity of hero turns 0.1f faster while the Skill is active.
-     * After a determined time the animation and velocity of the hero
-     * are reset to standard.
+     * Velocity of hero turns faster, animation is changed und hero loses 10 health points. The
+     * velocity of hero turns 0.1f faster while the Skill is active. After a determined time the
+     * animation and velocity of the hero are reset to standard.
      *
      * @param entity which uses the skill
      */
-
     @Override
     public void execute(Entity entity) {
         VelocityComponent vc =

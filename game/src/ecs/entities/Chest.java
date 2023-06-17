@@ -64,18 +64,19 @@ public class Chest extends Entity {
                         new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
         chestLogger.info("New Chest has been created");
     }
+
     private void openChest(Entity entity) {
         InventoryComponent heroInventoryC =
-            entity.getComponent(InventoryComponent.class)
-                .map(InventoryComponent.class::cast)
-                .orElseThrow(
-                    () ->
-                        createMissingComponentException(
-                            InventoryComponent.class.getName(), entity));
+                entity.getComponent(InventoryComponent.class)
+                        .map(InventoryComponent.class::cast)
+                        .orElseThrow(
+                                () ->
+                                        createMissingComponentException(
+                                                InventoryComponent.class.getName(), entity));
 
         ItemData key = null;
-        for(ItemData item : heroInventoryC.getItems()){
-            if(item instanceof ChestKey){
+        for (ItemData item : heroInventoryC.getItems()) {
+            if (item instanceof ChestKey) {
                 key = item;
                 chestLogger.info("Key has been found, chest opens itself");
                 break;
@@ -93,39 +94,41 @@ public class Chest extends Entity {
     }
 
     /**
-     * Removes all items of the chest's inventory and places them near its position
-     * Afterwards it changes its animation to open.
+     * Removes all items of the chest's inventory and places them near its position Afterwards it
+     * changes its animation to open.
      *
      * @param entity The Chest
      */
     public void dropItems(Entity entity) {
 
         PositionComponent chestPositionC =
-            this.getComponent(PositionComponent.class)
-                .map(PositionComponent.class::cast)
-                .orElseThrow(
-                    () ->
-                        createMissingComponentException(
-                            PositionComponent.class.getName(), this));
+                this.getComponent(PositionComponent.class)
+                        .map(PositionComponent.class::cast)
+                        .orElseThrow(
+                                () ->
+                                        createMissingComponentException(
+                                                PositionComponent.class.getName(), this));
 
         InventoryComponent chestInventoryC =
-            this.getComponent(InventoryComponent.class)
-                .map(InventoryComponent.class::cast)
-                .orElseThrow(
-                    () ->
-                        createMissingComponentException(
-                            InventoryComponent.class.getName(), this));
+                this.getComponent(InventoryComponent.class)
+                        .map(InventoryComponent.class::cast)
+                        .orElseThrow(
+                                () ->
+                                        createMissingComponentException(
+                                                InventoryComponent.class.getName(), this));
 
         List<ItemData> itemData = chestInventoryC.getItems();
         double count = itemData.size();
         IntStream.range(0, itemData.size())
-            .forEach(
-                index ->
-                    WorldItemBuilder.buildWorldItem(itemData.get(index), calculateDropPosition(chestPositionC, index / count)));
+                .forEach(
+                        index ->
+                                WorldItemBuilder.buildWorldItem(
+                                        itemData.get(index),
+                                        calculateDropPosition(chestPositionC, index / count)));
 
         this.getComponent(AnimationComponent.class)
-            .map(AnimationComponent.class::cast)
-            .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
+                .map(AnimationComponent.class::cast)
+                .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
     }
 
     /**
