@@ -18,7 +18,7 @@ public class SpawnLoot implements IOnLevelLoader {
     /** Whith a specific chance an Item is added into the game */
     @Override
     public void onLevelLoad() {
-        if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
+        if ((int) Math.floor(Math.random() * (5 - 1)) == 2) {
             Game.addEntity(
                     WorldItemBuilder.buildWorldItem(new ItemDataGenerator().generateItemData()));
             Game.addEntity(Chest.createNewChest());
