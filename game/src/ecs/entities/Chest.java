@@ -3,6 +3,7 @@ package ecs.entities;
 import ecs.components.*;
 import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
+import ecs.items.individualitems.ChestKey;
 import graphic.Animation;
 import java.util.List;
 import java.util.Random;
@@ -60,41 +61,84 @@ public class Chest extends Entity {
                         new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
     }
     private void openChest(Entity entity) {
-        Game.togglePause();
-        LockPickingGame.playLockPickingGameAndWait(this);
-        Game.togglePause();
+        InventoryComponent heroInventoryC =
+            entity.getComponent(InventoryComponent.class)
+                .map(InventoryComponent.class::cast)
+                .orElseThrow(
+                    () ->
+                        createMissingComponentException(
+                            InventoryComponent.class.getName(), entity));
+
+        ItemData key = null;
+        for(ItemData item : heroInventoryC.getItems()){
+            if(item instanceof ChestKey){
+                key = item;
+                break;
+            }
+        }
+
+        if (key != null) {
+            dropItems(entity);
+        } else {
+            Game.togglePause();
+            LockPickingGame.playLockPickingGameAndWait(this);
+            Game.togglePause();
+        }
     }
 
-    public void dropItems(Entity entity) {
-        InventoryComponent inventoryComponent =
-                entity.getComponent(InventoryComponent.class)
-                        .map(InventoryComponent.class::cast)
-                        .orElseThrow(
-                                () ->
-                                        createMissingComponentException(
-                                                InventoryComponent.class.getName(), entity));
-        PositionComponent positionComponent =
-                entity.getComponent(PositionComponent.class)
-                        .map(PositionComponent.class::cast)
-                        .orElseThrow(
-                                () ->
-                                        createMissingComponentException(
-                                                PositionComponent.class.getName(), entity));
-        List<ItemData> itemData = inventoryComponent.getItems();
+
+
+    public void dropItems(Entity hero) {
+        InventoryComponent heroInventoryC =
+            hero.getComponent(InventoryComponent.class)
+                .map(InventoryComponent.class::cast)
+                .orElseThrow(
+                    () ->
+                        createMissingComponentException(
+                            InventoryComponent.class.getName(), hero));
+
+        ItemData key = null;
+        for(ItemData item : heroInventoryC.getItems()){
+            if(item instanceof ChestKey){
+                key = item;
+                break;
+            }
+        }
+
+        // key is assumed to exist at this point
+        heroInventoryC.removeItem(key);
+        PositionComponent chestPositionC =
+            this.getComponent(PositionComponent.class)
+                .map(PositionComponent.class::cast)
+                .orElseThrow(
+                    () ->
+                        createMissingComponentException(
+                            PositionComponent.class.getName(), this));
+
+        InventoryComponent chestInventoryC =
+            this.getComponent(InventoryComponent.class)
+                .map(InventoryComponent.class::cast)
+                .orElseThrow(
+                    () ->
+                        createMissingComponentException(
+                            InventoryComponent.class.getName(), this));
+
+        List<ItemData> itemData = chestInventoryC.getItems();
         double count = itemData.size();
-
         IntStream.range(0, itemData.size())
-                .forEach(
-                        index ->
-                                itemData.get(index)
-                                        .triggerDrop(
-                                                entity,
-                                                calculateDropPosition(
-                                                        positionComponent, index / count)));
-        entity.getComponent(AnimationComponent.class)
-                .map(AnimationComponent.class::cast)
-                .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
+            .forEach(
+                index ->
+                    itemData.get(index)
+                        .triggerDrop(
+                            this,
+                            calculateDropPosition(chestPositionC, index / count)));
+
+        this.getComponent(AnimationComponent.class)
+            .map(AnimationComponent.class::cast)
+            .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
     }
+
+
 
     /**
      * small Helper to determine the Position of the dropped item simple circle drop

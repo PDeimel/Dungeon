@@ -145,6 +145,7 @@ public class Game extends ScreenAdapter implements IOnLevelLoader {
         SpawnCharacters spawnCharacters = new SpawnCharacters(levelReached);
         SpawnLoot spawnLoot = new SpawnLoot();
         Trap t = new Trap();
+        Chest.createNewChest();
     }
 
     private void manageEntitiesSets() {
