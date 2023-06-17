@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -36,6 +37,7 @@ public class LockPickingGame extends JFrame {
     private Timer timer;
     private int timeRemaining;
     private Chest chest;
+    private final Logger minigameLogger = Logger.getLogger(this.getClass().getSimpleName());
 
     private class LockPanel extends JPanel {
 
@@ -97,11 +99,13 @@ public class LockPickingGame extends JFrame {
                 for (int i = 0; i < CORRECT_SEQUENCE.size(); i++) {
                     if (!Objects.equals(playerSequence.get(i), CORRECT_SEQUENCE.get(i))) {
                         resetGame();
+                        minigameLogger.info("Order has been neglected, resulting in loss");
                         onPuzzleSolved(false);
                         return;
                     }
                 }
                 if (playerSequence.equals(CORRECT_SEQUENCE)) {
+                    minigameLogger.info("Order has been kept, rewards will follow");
                     onPuzzleSolved(true);
                 }
             }
@@ -141,6 +145,7 @@ public class LockPickingGame extends JFrame {
         if (solved) {
             LockPickingGame.super.dispose();
             chest.dropItems(chest);
+            minigameLogger.info("The chests items have been dropped");
         } else {
             LockPickingGame.super.dispose();
         }

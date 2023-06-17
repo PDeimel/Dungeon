@@ -9,8 +9,8 @@ import ecs.items.IOnUse;
 import ecs.items.ItemData;
 import ecs.items.ItemType;
 
+/** A key that the hero can collect only being able to open a chest once */
 public class ChestKey extends ItemData {
-
 
     public ChestKey(){
         super(ItemType.Active,
@@ -18,7 +18,5 @@ public class ChestKey extends ItemData {
             AnimationBuilder.buildAnimation("objects/items/ChestKey/ChestKey_image.png"),
             "Chestkey",
             "A key that can open a treasure chest.");
-
-
     }
 }

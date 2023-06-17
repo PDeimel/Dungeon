@@ -8,6 +8,7 @@ import ecs.items.individualitems.ChestKey;
 import graphic.Animation;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import level.tools.LevelElement;
 import starter.Game;
@@ -16,6 +17,7 @@ import tools.Point;
 
 public class Chest extends Entity {
 
+    private final Logger chestLogger = Logger.getLogger(this.getClass().getSimpleName());
     public static final float defaultInteractionRadius = 1f;
     public static final List<String> DEFAULT_CLOSED_ANIMATION_FRAMES =
             List.of("objects/treasurechest/treasurechest/chest_full_open_anim_f0.png");
@@ -45,7 +47,7 @@ public class Chest extends Entity {
     }
 
     /**
-     * Creates a new Chest which drops the given items on interaction
+     * Creates a new Chest and decides how and if to open it
      *
      * @param itemData which the chest is supposed to drop
      * @param position the position where the chest is placed
@@ -60,6 +62,7 @@ public class Chest extends Entity {
                         this,
                         new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
                         new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
+        chestLogger.info("New Chest has been created");
     }
     private void openChest(Entity entity) {
         InventoryComponent heroInventoryC =
@@ -74,6 +77,7 @@ public class Chest extends Entity {
         for(ItemData item : heroInventoryC.getItems()){
             if(item instanceof ChestKey){
                 key = item;
+                chestLogger.info("Key has been found, chest opens itself");
                 break;
             }
         }
@@ -81,12 +85,19 @@ public class Chest extends Entity {
             dropItems(entity);
             heroInventoryC.removeItem(key);
         } else {
+            chestLogger.info("No key found, starting minigame");
             Game.togglePause();
             LockPickingGame.playLockPickingGameAndWait(this);
             Game.togglePause();
         }
     }
 
+    /**
+     * Removes all items of the chest's inventory and places them near its position
+     * Afterwards it changes its animation to open.
+     *
+     * @param entity The Chest
+     */
     public void dropItems(Entity entity) {
 
         PositionComponent chestPositionC =
