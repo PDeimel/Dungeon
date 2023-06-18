@@ -36,7 +36,7 @@ public class LockPickingGame extends JFrame {
     private int selectedPin = -1;
     private Timer timer;
     private int timeRemaining;
-    private Chest chest;
+    private final Chest chest;
     private final Logger minigameLogger = Logger.getLogger(this.getClass().getSimpleName());
 
     private class LockPanel extends JPanel {
@@ -177,7 +177,7 @@ public class LockPickingGame extends JFrame {
         this.chest = chest;
         setTitle("Lockpicking Minigame");
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         LockPanel lockPanel = new LockPanel();
         add(lockPanel);
