@@ -97,20 +97,20 @@ public class Chest extends Entity {
      */
     public void dropItems(Entity entity) {
         PositionComponent chestPositionC =
-                this.getComponent(PositionComponent.class)
+                entity.getComponent(PositionComponent.class)
                         .map(PositionComponent.class::cast)
                         .orElseThrow(
                                 () ->
                                         createMissingComponentException(
-                                                PositionComponent.class.getName(), this));
+                                                PositionComponent.class.getName(), entity));
 
         InventoryComponent chestInventoryC =
-                this.getComponent(InventoryComponent.class)
+                entity.getComponent(InventoryComponent.class)
                         .map(InventoryComponent.class::cast)
                         .orElseThrow(
                                 () ->
                                         createMissingComponentException(
-                                                InventoryComponent.class.getName(), this));
+                                                InventoryComponent.class.getName(), entity));
 
         List<ItemData> itemData = chestInventoryC.getItems();
         double count = itemData.size();
@@ -121,7 +121,7 @@ public class Chest extends Entity {
                                         itemData.get(index),
                                         calculateDropPosition(chestPositionC, index / count)));
 
-        this.getComponent(AnimationComponent.class)
+        entity.getComponent(AnimationComponent.class)
                 .map(AnimationComponent.class::cast)
                 .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));
     }
