@@ -95,7 +95,7 @@ public class Chest extends Entity {
      *
      * @param entity The chest which items get removed
      */
-    public void dropItems(Entity entity) {
+    public static void dropItems(Entity entity) {
         PositionComponent chestPositionC =
                 entity.getComponent(PositionComponent.class)
                         .map(PositionComponent.class::cast)

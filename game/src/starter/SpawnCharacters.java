@@ -72,6 +72,7 @@ public class SpawnCharacters implements IOnLevelLoader {
             }
             riddlerSpawned = true;
         }
+        ChestMonster c = new ChestMonster();
     }
 
     public void setAmountOfMonsters(int amountOfMonsters) {
