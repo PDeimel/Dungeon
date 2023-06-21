@@ -9,15 +9,14 @@ import ecs.components.ai.idle.IIdleAI;
 import ecs.components.ai.idle.PatrouilleWalk;
 import ecs.components.ai.transition.ITransition;
 import ecs.components.ai.transition.RangeTransition;
-import ecs.components.xp.XPComponent;
 import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
-import graphic.Animation;
-
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+/** A Monster which acts like a chest until the hero tries to open it */
 public class ChestMonster extends Monster{
 
     private final float XSPEED = 0.2f;
@@ -29,6 +28,7 @@ public class ChestMonster extends Monster{
     private IFightAI iFightAI = new CollideAI(0.2f);
     private IIdleAI idleAI = new PatrouilleWalk(5f, 10, 20, PatrouilleWalk.MODE.RANDOM);
     private ITransition transition = new RangeTransition(4f);
+    private final Logger mimicLogger = Logger.getLogger(this.getClass().getSimpleName());
 
     public ChestMonster() {
         super();
@@ -50,9 +50,14 @@ public class ChestMonster extends Monster{
         super.setPathToIdleRight("character/monster/chestmonster/idleAndRunRight");
         super.setPathToRunLeft("character/monster/chestmonster/idleAndRunLeft");
         super.setPathToRunRight("character/monster/chestmonster/idleAndRunRight");
-
+        mimicLogger.info("Mimic has been spawned");
     }
 
+    /**
+     * Activates the monster-part of the mimic once interacted with
+     *
+     * @param entity The entity which changes
+     */
     private void activateMonster(Entity entity) {
         super.setIdleRight();
         super.setIdleLeft();
@@ -62,5 +67,6 @@ public class ChestMonster extends Monster{
         new HealthComponent(entity, HEALTH, Chest::dropItems, missingTextureAnimation, missingTextureAnimation);
         new AIComponent(entity, iFightAI, idleAI, transition);
         super.setDmg(DMG);
+        mimicLogger.info("Mimic has been activated");
     }
 }
