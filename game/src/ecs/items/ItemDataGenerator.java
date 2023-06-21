@@ -1,9 +1,6 @@
 package ecs.items;
 
-import ecs.items.individualitems.Bag;
-import ecs.items.individualitems.Cake;
-import ecs.items.individualitems.Earthquake;
-import ecs.items.individualitems.RainbowRune;
+import ecs.items.individualitems.*;
 import java.util.List;
 import java.util.Random;
 
@@ -13,7 +10,7 @@ public class ItemDataGenerator {
 
     // Every type of item created is put into the template-list
     private List<ItemData> templates =
-            List.of(new Bag(), new Cake(), new Earthquake(), new RainbowRune());
+            List.of(new Bag(), new Cake(), new Earthquake(), new RainbowRune(), new ChestKey());
     private Random rand = new Random();
 
     /**

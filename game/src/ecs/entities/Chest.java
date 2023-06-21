@@ -3,16 +3,21 @@ package ecs.entities;
 import ecs.components.*;
 import ecs.items.ItemData;
 import ecs.items.ItemDataGenerator;
+import ecs.items.WorldItemBuilder;
+import ecs.items.individualitems.ChestKey;
 import graphic.Animation;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import level.tools.LevelElement;
 import starter.Game;
+import starter.LockPickingGame;
 import tools.Point;
 
 public class Chest extends Entity {
 
+    private final Logger chestLogger = Logger.getLogger(this.getClass().getSimpleName());
     public static final float defaultInteractionRadius = 1f;
     public static final List<String> DEFAULT_CLOSED_ANIMATION_FRAMES =
             List.of("objects/treasurechest/treasurechest/chest_full_open_anim_f0.png");
@@ -51,40 +56,69 @@ public class Chest extends Entity {
         new PositionComponent(this, position);
         InventoryComponent ic = new InventoryComponent(this, itemData.size());
         itemData.forEach(ic::addItem);
-        new InteractionComponent(this, defaultInteractionRadius, false, this::dropItems);
+        new InteractionComponent(this, defaultInteractionRadius, false, this::openChest);
         AnimationComponent ac =
                 new AnimationComponent(
                         this,
-                        new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-                        new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
+                        new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 50, false),
+                        new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 50, false));
+        chestLogger.info("New Chest has been created");
     }
 
-    private void dropItems(Entity entity) {
-        InventoryComponent inventoryComponent =
-                entity.getComponent(InventoryComponent.class)
-                        .map(InventoryComponent.class::cast)
-                        .orElseThrow(
-                                () ->
-                                        createMissingComponentException(
-                                                InventoryComponent.class.getName(), entity));
-        PositionComponent positionComponent =
+    private void openChest(Entity entity) {
+        InventoryComponent heroInventoryC =
+                (InventoryComponent)
+                        Game.getHero().get().getComponent(InventoryComponent.class).orElseThrow();
+
+        ItemData key =
+                heroInventoryC.getItems().stream()
+                        .filter(item -> item instanceof ChestKey)
+                        .findFirst()
+                        .orElse(null);
+
+        if (key != null) {
+            chestLogger.info("Key has been found in hero's inventory");
+            dropItems(entity);
+            heroInventoryC.removeItem(key);
+        } else {
+            chestLogger.info("No key found, resuming with minigame");
+            Game.togglePause();
+            LockPickingGame.playLockPickingGameAndWait(this);
+            Game.togglePause();
+        }
+    }
+
+    /**
+     * Drops the chests items near its position
+     *
+     * @param entity The chest which items get removed
+     */
+    public static void dropItems(Entity entity) {
+        PositionComponent chestPositionC =
                 entity.getComponent(PositionComponent.class)
                         .map(PositionComponent.class::cast)
                         .orElseThrow(
                                 () ->
                                         createMissingComponentException(
                                                 PositionComponent.class.getName(), entity));
-        List<ItemData> itemData = inventoryComponent.getItems();
-        double count = itemData.size();
 
+        InventoryComponent chestInventoryC =
+                entity.getComponent(InventoryComponent.class)
+                        .map(InventoryComponent.class::cast)
+                        .orElseThrow(
+                                () ->
+                                        createMissingComponentException(
+                                                InventoryComponent.class.getName(), entity));
+
+        List<ItemData> itemData = chestInventoryC.getItems();
+        double count = itemData.size();
         IntStream.range(0, itemData.size())
                 .forEach(
                         index ->
-                                itemData.get(index)
-                                        .triggerDrop(
-                                                entity,
-                                                calculateDropPosition(
-                                                        positionComponent, index / count)));
+                                WorldItemBuilder.buildWorldItem(
+                                        itemData.get(index),
+                                        calculateDropPosition(chestPositionC, index / count)));
+
         entity.getComponent(AnimationComponent.class)
                 .map(AnimationComponent.class::cast)
                 .ifPresent(x -> x.setCurrentAnimation(x.getIdleRight()));

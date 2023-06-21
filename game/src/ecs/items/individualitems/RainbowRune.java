@@ -64,8 +64,7 @@ public class RainbowRune extends ItemData implements IOnUse {
                                 });
             }
             System.out.println("The Rainbow-Rune created an earthquake.");
-        }
-        else {
+        } else {
             new SpawnCharacters(0).onLevelLoad();
         }
 

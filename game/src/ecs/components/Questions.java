@@ -10,4 +10,5 @@ public record Questions(String question, String answer) {
     public String getQuestion() {
         return question;
     }
-};
+}
+;

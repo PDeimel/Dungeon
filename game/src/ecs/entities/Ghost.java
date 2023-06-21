@@ -5,17 +5,17 @@ import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.CollideAI;
 import ecs.components.ai.idle.StaticRadiusWalk;
 import ecs.components.ai.transition.PassiveTransition;
-import starter.Game;
-import starter.SpawnCharacters;
 import java.util.Optional;
 import java.util.Set;
+import starter.Game;
+import starter.SpawnCharacters;
 
 /**
  * A harmless ghost that follows the hero around most of the time but is sometimes able to move
  * around freely or disappear completely from the level. Once he is in close reach of his
  * gravestone, he will leave the level behind.
  */
-public class Ghost extends NPC{
+public class Ghost extends NPC {
 
     private final String pathToIdleLeft = "character/monster/ghost/idleAndRunLeft";
     private final String pathToIdleRight = "character/monster/ghost/idleAndRunRight";
@@ -45,10 +45,11 @@ public class Ghost extends NPC{
                 Optional<Component> heroHealthThis = this.hero.getComponent(HealthComponent.class);
                 HealthComponent heroHealth = (HealthComponent) heroHealthThis.orElseThrow();
                 heroHealth.setCurrentHealthpoints(heroHealth.getCurrentHealthpoints() + 20);
-                System.out.println("The hero just received 20 health for helping the ghost reach the afterlife!");
-            }
-            else {
-                System.out.println("The ghost is angry at the hero for making him leave his realm and punishes him!");
+                System.out.println(
+                        "The hero just received 20 health for helping the ghost reach the afterlife!");
+            } else {
+                System.out.println(
+                        "The ghost is angry at the hero for making him leave his realm and punishes him!");
                 SpawnCharacters punish = new SpawnCharacters(0);
                 punish.setAmountOfMonsters(1);
                 punish.onLevelLoad();
@@ -76,12 +77,9 @@ public class Ghost extends NPC{
         }
     }
 
-
     private void setupHitboxComponent() {
         new HitboxComponent(
-            this,
-            (player, ghost, direction) -> {},
-            (player, ghost, direction) -> {});
+                this, (player, ghost, direction) -> {}, (player, ghost, direction) -> {});
     }
 
     /** Gives the ghost a special AI in which it well never try to follow or attack the hero. */

@@ -10,6 +10,4 @@ public interface IInteraction {
      * @param entity
      */
     void onInteraction(Entity entity);
-
-
 }

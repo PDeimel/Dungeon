@@ -28,7 +28,7 @@ public class Hero extends Entity {
     private final String pathToRunRight = "knight/runRight";
     private final String pathToGetHit = "knight/hit";
     private final String pathToDie = "knight/death";
-    private final int health = 100;
+    private final int health = 1000;
     private final int invSlots = 5;
     private Skill firstSkill;
     private Skill secondSkill;
@@ -53,6 +53,7 @@ public class Hero extends Entity {
         pc.setSkillSlot2(secondSkill);
         // Added the Inventory to the hero
         new InventoryComponent(this, invSlots);
+
         levelUp =
                 (long nextLevel) -> {
                     this.getComponent(HealthComponent.class)

@@ -9,7 +9,9 @@ import ecs.components.ai.idle.StaticRadiusLongWay;
 import ecs.components.ai.transition.ITransition;
 import ecs.components.ai.transition.RangeTransition;
 
-/** A monster resembling a pig only being able to move horizontally but to compensate is very tanky */
+/**
+ * A monster resembling a pig only being able to move horizontally but to compensate is very tanky
+ */
 public class PigMonster extends Monster {
 
     private final float XSPEED = 0.15f;
