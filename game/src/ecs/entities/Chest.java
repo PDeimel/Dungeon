@@ -60,8 +60,8 @@ public class Chest extends Entity {
         AnimationComponent ac =
                 new AnimationComponent(
                         this,
-                        new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false),
-                        new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 100, false));
+                        new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 50, false),
+                        new Animation(DEFAULT_OPENING_ANIMATION_FRAMES, 50, false));
         chestLogger.info("New Chest has been created");
     }
 
@@ -70,16 +70,13 @@ public class Chest extends Entity {
                 (InventoryComponent)
                         Game.getHero().get().getComponent(InventoryComponent.class).orElseThrow();
 
-        ItemData key = null;
-        for (ItemData item : heroInventoryC.getItems()) {
-            if (item instanceof ChestKey) {
-                key = item;
-                chestLogger.info("Key has been found in heros inventory");
-                break;
-            }
-        }
+        ItemData key = heroInventoryC.getItems().stream()
+            .filter(item -> item instanceof ChestKey)
+            .findFirst()
+            .orElse(null);
 
         if (key != null) {
+            chestLogger.info("Key has been found in hero's inventory");
             dropItems(entity);
             heroInventoryC.removeItem(key);
         } else {

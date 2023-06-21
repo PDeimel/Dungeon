@@ -1,5 +1,6 @@
 package ecs.entities;
 
+import dslToGame.AnimationBuilder;
 import ecs.components.*;
 import ecs.components.ai.AIComponent;
 import ecs.components.ai.fight.CollideAI;
@@ -28,14 +29,11 @@ public class ChestMonster extends Monster{
     private IFightAI iFightAI = new CollideAI(0.2f);
     private IIdleAI idleAI = new PatrouilleWalk(5f, 10, 20, PatrouilleWalk.MODE.RANDOM);
     private ITransition transition = new RangeTransition(4f);
-    public static final List<String> DEFAULT_CLOSED_ANIMATION_FRAMES =
-        List.of("objects/treasurechest/treasurechest/chest_full_open_anim_f0.png");
 
     public ChestMonster() {
         super();
         new PositionComponent(this);
-        new AnimationComponent(this, new Animation(DEFAULT_CLOSED_ANIMATION_FRAMES, 100, false));
-
+        new AnimationComponent(this, AnimationBuilder.buildAnimation("objects/treasurechest/treasurechest/chest_full_open_anim_f0.png"));
         Random random = new Random();
         ItemDataGenerator itemDataGenerator = new ItemDataGenerator();
 
@@ -52,9 +50,12 @@ public class ChestMonster extends Monster{
         super.setPathToIdleRight("character/monster/chestmonster/idleAndRunRight");
         super.setPathToRunLeft("character/monster/chestmonster/idleAndRunLeft");
         super.setPathToRunRight("character/monster/chestmonster/idleAndRunRight");
+
     }
 
     private void activateMonster(Entity entity) {
+        super.setIdleRight();
+        super.setIdleLeft();
         new AnimationComponent(entity, super.getIdleLeft(), super.getIdleRight());
         new HitboxComponent(entity, super.getMonsterCollisionEnter(), super.getMonsterCollisionOut());
         new VelocityComponent(entity, XSPEED, YSPEED, super.getIdleLeft(), super.getIdleRight());
