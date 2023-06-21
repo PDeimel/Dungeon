@@ -5,11 +5,10 @@ import ecs.components.AnimationComponent;
 import ecs.components.PositionComponent;
 import ecs.components.VelocityComponent;
 import graphic.Animation;
-
 import java.util.logging.Logger;
 
 /** An abstract superclass to classify certain entities as "Not-Playable-Characters" */
-public abstract class NPC extends Entity{
+public abstract class NPC extends Entity {
 
     private final Logger npcLogger = Logger.getLogger(this.getClass().getSimpleName());
 
@@ -25,7 +24,8 @@ public abstract class NPC extends Entity{
         npcLogger.info("NPC received PositionComponent");
     }
 
-    public void setupVelocityComponent(float xSpeed, float ySpeed, String animLeft, String animRight) {
+    public void setupVelocityComponent(
+            float xSpeed, float ySpeed, String animLeft, String animRight) {
         Animation runLeft = AnimationBuilder.buildAnimation(animLeft);
         Animation runRight = AnimationBuilder.buildAnimation(animRight);
         new VelocityComponent(this, xSpeed, ySpeed, runLeft, runRight);

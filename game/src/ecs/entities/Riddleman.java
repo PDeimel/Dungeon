@@ -6,10 +6,11 @@ import ecs.components.*;
 public class Riddleman extends NPC {
 
     private final String pathToIdle = "character/monster/riddleman";
-    public Riddleman(){
+
+    public Riddleman() {
         super();
         super.setupPositionComponent();
         super.setupAnimationComponent(pathToIdle, pathToIdle);
-        new InteractionComponent(this,1f,false,new RiddleInteraction());
+        new InteractionComponent(this, 1f, false, new RiddleInteraction());
     }
 }

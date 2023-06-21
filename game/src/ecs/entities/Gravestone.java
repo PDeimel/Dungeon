@@ -1,15 +1,13 @@
 package ecs.entities;
 
-import ecs.components.AnimationComponent;
 import ecs.components.HitboxComponent;
-import ecs.components.PositionComponent;
 
 /**
  * A gravestone belonging to the ghost which spawns in the same level. Once the hero as well as the
  * ghost are in proximity to the stone, the ghost will disappear and the hero will either be
  * rewarded or punished.
  */
-public class Gravestone extends NPC{
+public class Gravestone extends NPC {
 
     private final String pathToIdleLeft = "character/monster/gravestone";
     private final String pathToIdleRight = "character/monster/gravestone";

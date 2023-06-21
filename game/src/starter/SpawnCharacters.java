@@ -38,8 +38,8 @@ public class SpawnCharacters implements IOnLevelLoader {
     }
 
     /**
-     * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates a gravestone with
-     * a ghost once per level. Additionally, a Riddleman can also be spawned.
+     * Spawns an amount of monsters scaling with the depth the hero has reached and possibly creates
+     * a gravestone with a ghost once per level. Additionally, a Riddleman can also be spawned.
      */
     @Override
     public void onLevelLoad() {
@@ -64,15 +64,15 @@ public class SpawnCharacters implements IOnLevelLoader {
             }
         }
         /*  The riddler is able to spawn new monsters, so in order to prevent him from duping
-            himself a checkup is inserted before he is created.
-         */
-        if(!riddlerSpawned){
+           himself a checkup is inserted before he is created.
+        */
+        if (!riddlerSpawned) {
             if ((int) Math.floor(Math.random() * (5 - 1) + 0) == 2) {
                 NPC riddler = new Riddleman();
             }
             riddlerSpawned = true;
         }
-
+        ChestMonster c = new ChestMonster();
     }
 
     public void setAmountOfMonsters(int amountOfMonsters) {
