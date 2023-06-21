@@ -70,10 +70,11 @@ public class Chest extends Entity {
                 (InventoryComponent)
                         Game.getHero().get().getComponent(InventoryComponent.class).orElseThrow();
 
-        ItemData key = heroInventoryC.getItems().stream()
-            .filter(item -> item instanceof ChestKey)
-            .findFirst()
-            .orElse(null);
+        ItemData key =
+                heroInventoryC.getItems().stream()
+                        .filter(item -> item instanceof ChestKey)
+                        .findFirst()
+                        .orElse(null);
 
         if (key != null) {
             chestLogger.info("Key has been found in hero's inventory");

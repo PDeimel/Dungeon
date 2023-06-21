@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 /** A Monster which acts like a chest until the hero tries to open it */
-public class ChestMonster extends Monster{
+public class ChestMonster extends Monster {
 
     private final float XSPEED = 0.2f;
     private final float YSPEED = 0.2f;
@@ -33,14 +33,17 @@ public class ChestMonster extends Monster{
     public ChestMonster() {
         super();
         new PositionComponent(this);
-        new AnimationComponent(this, AnimationBuilder.buildAnimation("objects/treasurechest/treasurechest/chest_full_open_anim_f0.png"));
+        new AnimationComponent(
+                this,
+                AnimationBuilder.buildAnimation(
+                        "objects/treasurechest/treasurechest/chest_full_open_anim_f0.png"));
         Random random = new Random();
         ItemDataGenerator itemDataGenerator = new ItemDataGenerator();
 
         List<ItemData> itemData =
-            IntStream.range(0, random.nextInt(1, 3))
-                .mapToObj(i -> itemDataGenerator.generateItemData())
-                .toList();
+                IntStream.range(0, random.nextInt(1, 3))
+                        .mapToObj(i -> itemDataGenerator.generateItemData())
+                        .toList();
         InventoryComponent ic = new InventoryComponent(this, itemData.size());
         itemData.forEach(ic::addItem);
         new InteractionComponent(this, defaultInteractionRadius, false, this::activateMonster);
@@ -62,9 +65,11 @@ public class ChestMonster extends Monster{
         super.setIdleRight();
         super.setIdleLeft();
         new AnimationComponent(entity, super.getIdleLeft(), super.getIdleRight());
-        new HitboxComponent(entity, super.getMonsterCollisionEnter(), super.getMonsterCollisionOut());
+        new HitboxComponent(
+                entity, super.getMonsterCollisionEnter(), super.getMonsterCollisionOut());
         new VelocityComponent(entity, XSPEED, YSPEED, super.getIdleLeft(), super.getIdleRight());
-        new HealthComponent(entity, HEALTH, Chest::dropItems, missingTextureAnimation, missingTextureAnimation);
+        new HealthComponent(
+                entity, HEALTH, Chest::dropItems, missingTextureAnimation, missingTextureAnimation);
         new AIComponent(entity, iFightAI, idleAI, transition);
         super.setDmg(DMG);
         mimicLogger.info("Mimic has been activated");
